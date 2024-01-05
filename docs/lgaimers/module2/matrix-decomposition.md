@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Matrix Decomposition
-parent: Module 2
+parent: Mathematics for ML
 grand_parent: LG Aimers
 use_math: true
 nav_order: 1
@@ -56,7 +56,7 @@ matrix A가 symmetric, positive definite일 때, $\mathbf{A} = \mathbf{L}\mathbf
 - determinant를 쉽게 계산하는 것 등등에 활용할 수 있음
 
 ## Eigendecomposition (EVD)
-TBD
+Coming soon
 
 ## Singular Value Decomposition (SVD)
-TBD
+Coming soon

@@ -1,9 +1,8 @@
 ---
 layout: default
-title: Convex Optimization
+title: PCA
 parent: Mathematics for ML
 grand_parent: LG Aimers
 use_math: true
-nav_order: 2
 ---
-# Convex Optimization
+# Principal Component Analysis (PCA, 주성분 분석)

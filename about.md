@@ -2,4 +2,7 @@
 layout: default
 title: About
 ---
-AI, Flutter 등등 이것저것 다 해보고 싶은 개발자입니다!
+
+AI, Flutter 및 이것저것 관심있는 개발자입니다 :)
+
+[GitHub](https://github.com/sangohkim)
