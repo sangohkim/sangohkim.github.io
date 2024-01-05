@@ -1,9 +1,13 @@
 ---
 layout: default
-title: LG Aimers Module 2
+title: Module 2
 parent: LG Aimers
+use_math: true
 ---
-# LG Aimers Module 2 내용 정리
+# Mathematics for ML
+ML에 쓰이는 수학적 개념 중 중요한 것들을 배움
+
 ## Matrix Decomposition
+$123$
 ## Convex Optimization
 ## PCA (Principal Component Analysis)

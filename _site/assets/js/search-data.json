@@ -27,6 +27,41 @@
     
     "relUrl": "/docs/lgaimers/lgaimers-menu/"
   },"4": {
+    "doc": "Module 2",
+    "title": "Mathematics for ML",
+    "content": "ML에 쓰이는 수학적 개념 중 중요한 것들을 배움 . ",
+    "url": "/docs/lgaimers/lgaimers-mod2/#mathematics-for-ml",
+    
+    "relUrl": "/docs/lgaimers/lgaimers-mod2/#mathematics-for-ml"
+  },"5": {
+    "doc": "Module 2",
+    "title": "Matrix Decomposition",
+    "content": "$123$ . ",
+    "url": "/docs/lgaimers/lgaimers-mod2/#matrix-decomposition",
+    
+    "relUrl": "/docs/lgaimers/lgaimers-mod2/#matrix-decomposition"
+  },"6": {
+    "doc": "Module 2",
+    "title": "Convex Optimization",
+    "content": " ",
+    "url": "/docs/lgaimers/lgaimers-mod2/#convex-optimization",
+    
+    "relUrl": "/docs/lgaimers/lgaimers-mod2/#convex-optimization"
+  },"7": {
+    "doc": "Module 2",
+    "title": "PCA (Principal Component Analysis)",
+    "content": " ",
+    "url": "/docs/lgaimers/lgaimers-mod2/#pca-principal-component-analysis",
+    
+    "relUrl": "/docs/lgaimers/lgaimers-mod2/#pca-principal-component-analysis"
+  },"8": {
+    "doc": "Module 2",
+    "title": "Module 2",
+    "content": " ",
+    "url": "/docs/lgaimers/lgaimers-mod2/",
+    
+    "relUrl": "/docs/lgaimers/lgaimers-mod2/"
+  },"9": {
     "doc": "MacOs Flutter 개발환경 구성",
     "title": "MacOs Flutter 개발환경 구성",
     "content": " ",

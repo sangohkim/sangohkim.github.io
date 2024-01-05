@@ -184,3 +184,10 @@ compress_html:
   profile: false
   # ignore:
   #   envs: all
+
+# Conversion
+markdown: kramdown
+highlighter: rouge
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
