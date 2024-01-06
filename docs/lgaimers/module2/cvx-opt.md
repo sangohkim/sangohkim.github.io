@@ -184,7 +184,7 @@ $f(\mathbf{x}) = log\sum^n_{i=1}e^{x_i}$
 	- **결국 Dual problem은 convex optimization problem이다 $\Rightarrow$ 풀 수 있음이 보장된다.**
 
 ### KKT Condition (Karush-Kuhn-Tucker Optimality condition)
-$g_i(\mathbf{x}) \le 0, h_j(\mathbf{x}) = 0, \lambda^*_i \ge 0, \lambda^*_ig_i(\mathbf{x})=0, \nabla L(\mathbf{x}^*, \mathbf{\lambda}^*, \mathbf{\nu}^*) = 0$ 일 때 KKT condition을 만족한다고 함.
+$g\_i(\mathbf{x}) \le 0, h\_j(\mathbf{x}) = 0, \lambda^\*_i \ge 0, \lambda^\*_ig\_i(\mathbf{x})=0, \nabla L(\mathbf{x}^\*, \mathbf{\lambda}^\*, \mathbf{\nu}^\*) = 0$ 일 때 KKT condition을 만족한다고 함.
 
 #### KKT Condition과 관련된 성질
 - strong duality가 만족되는 optimization problem의 primal, dual solution은 KKT condition을 만족
