@@ -13,90 +13,111 @@
     
     "relUrl": "/docs/lgaimers/module2/cvx-opt/"
   },"2": {
+    "doc": "Convex Optimization",
+    "title": "Optimization이 ML에서 중요한 이유",
+    "content": "ML모델을 training하는 과정이 보통 최적의 parameter를 찾아내는 문제이다. 즉 Optimization 문제가 되는 경우가 많음. ",
+    "url": "/docs/lgaimers/module2/cvx-opt/#optimization%EC%9D%B4-ml%EC%97%90%EC%84%9C-%EC%A4%91%EC%9A%94%ED%95%9C-%EC%9D%B4%EC%9C%A0",
+    
+    "relUrl": "/docs/lgaimers/module2/cvx-opt/#optimization이-ml에서-중요한-이유"
+  },"3": {
+    "doc": "Convex Optimization",
+    "title": "Optimization problem의 분류",
+    "content": ". | constraints가 있는지에 따라 . | Constrained optimization | Unconstrained optimzation | . | objective function, constraints가 convex인지에 따라 . | Convex optimization 인지 여부로 분류 가능 | . | . ",
+    "url": "/docs/lgaimers/module2/cvx-opt/#optimization-problem%EC%9D%98-%EB%B6%84%EB%A5%98",
+    
+    "relUrl": "/docs/lgaimers/module2/cvx-opt/#optimization-problem의-분류"
+  },"4": {
+    "doc": "Convex Optimization",
+    "title": "Unconstrained optimization",
+    "content": "Unconstrained optimization problem인 경우 gradient descent를 바로 활용할 수 있다. Gradient Descent의 개념 . objective function이 $f(\\mathbf{x})$이고 epoch당 step size (learning rate)가 $\\gamma_k$일 때, . | step size의 값이 적절하고 | 방향 $\\mathbf{d}_k$가 $\\nabla f(\\mathbf{x}_k) \\cdot \\mathbf{d}_k &lt; 0$ | . 인 경우 local optimum을 구할 수 있음이 보장됨. | gradient vector는 각 point에서 가장 빠르게 증가하는 방향으로 흐르기 때문에 gradient vector의 반대 방향으로 $\\mathbf{d}_k$를 설정 | step마다 learning rate가 달라질 수 있음(learning rate schedule을 사용하는 경우) . | sklearn의 SGDClassifier에서 learning_rate를 점진적으로 감소시키는 등의 방법 | . | . Gradient Descent의 종류 . 일반적으로 최적화시켜야 하는 loss function은 각각의 data point에 대한 loss function을 더한 것으로 정의되는 경우가 많다(예를 들면 Linear regression에서 loss function은 MSE를 이용해 정의됨). 따라서 gradient를 구할 때도 각각의 data point에 대한 gradient를 모두 더하여 전체 gradient를 구해야하는 경우가 많다. 1. Batch(Full) Gradient Descent . 위에서 설명한 기본적인 방식을 그대로 구현하는 GD 알고리즘. $\\mathbf{\\theta}_{k+1} = \\mathbf{\\theta}_k - \\gamma_k \\sum^n_{i=1} \\nabla f(\\mathbf{x}^{(i)})$ . | sklearn에서 제공하지 않음 | 장점 . | 안정적으로 $\\theta^*$를 찾아갈 수 있다 | . | 단점 . | 안정적인 만큼 local minimum에 빠질 수 있다 | step 마다 모든 data point에 대한 gradient를 구해야 하므로 오래 걸린다 | . | . 2. Stochastic Gradient Descent . step 마다 전체 data point 중 하나를 랜덤으로 선택한 뒤 그 data point의 gradient만 사용하여 파라미터를 최적화시키는 방식. data point의 개수를 m이라고 할 때, 한 epoch마다 랜덤으로 data point를 선택하여 파라미터를 업데이트 하는 과정을 m번 반복함. $\\mathbf{\\theta}_{k+1} = \\mathbf{\\theta}_k - \\gamma_k \\nabla f(\\mathbf{x}^{(i)})$ . | 장점 . | 한 step당 계산 시간이 줄어드므로 더 빠르게 global optimum에 도달할 수 있음 | 한번에 하나의 data point만 필요하므로 아주 큰 dataset에도 적용이 가능 | . | 단점 . | 무작위성으로 인해 global optimum을 벗어날 확률마저 높아짐 | . | learning rate schedule . | 위에서 언급한 SGD의 단점을 극복하기 위한 방법 | learning rate를 점진적으로 감소시켜 global optimum에 안정적으로 도달할 수 있게 해주는 방식 | . | SGD를 적용하기 위한 조건 . | dataset이 IID condition을 만족해야 함 . | IID condition을 갖추어야만 global optimum을 향해 간다는 것이 보장됨 | 모든 data point가 서로 독립적이며(영향을 주지 않고) 같은 분포를 가져야 함 | epoch 시작 또는 끝에 data point는 shuffle하거나 step 마다 data point를 랜덤으로 선택하는 방식을 사용하면 보장됨 | . | feature의 scale이 동일해야 함 . | scale이 동일하지 않다면 global optimum에 도달하는 시간이 더 길어짐 | sklearn의 StandardScaler() 이용하기 | . | . | sklearn에서 SGD 사용하기 . | SGDClassifier: default learning rate schedule 방식은 $\\gamma_k = \\frac{1}{alpha(t_0 + k)}$ | SGDRegressor: default learning rate schedule 방식은 $\\gamma_k = \\frac{eta0}{k^{power_t}}$ | . | . ''' 적절한 dataset X, y가 주어진 경우 ''' import numpy as np from sklearn.linear_model import SGDRegressor sgd_reg = SGDRegressor() sgd_reg.fit(X, y.ravel()) . 3. Mini-batch Gradient Descent . dataset을 mini-batch라고 부르는 작은 sample set으로 나누고 각각의 set에 대해서 FGD를 적용하는 방식. GPU 최적화를 잘 이용할 수 있다 . | sklearn에서는 제공하지 않음 | . ",
+    "url": "/docs/lgaimers/module2/cvx-opt/#unconstrained-optimization",
+    
+    "relUrl": "/docs/lgaimers/module2/cvx-opt/#unconstrained-optimization"
+  },"5": {
     "doc": "Flutter Tips!",
     "title": "Flutter Tips!",
     "content": "Flutter 개발에 대한 글을 씁니다. ",
     "url": "/docs/fluttertips/fluttertips-menu/",
     
     "relUrl": "/docs/fluttertips/fluttertips-menu/"
-  },"3": {
+  },"6": {
     "doc": "Home",
     "title": "Home",
     "content": "안녕하세요 :) . 개발 및 공부를 하면서 헷갈렸던 것들, 꼭 기억하고 싶은 것들 (그 이외에도 구구절절한 경험)을 기록하기 위해 블로그를 만들었습니다. ",
     "url": "/",
     
     "relUrl": "/"
-  },"4": {
+  },"7": {
     "doc": "LG Aimers",
     "title": "LG Aimers",
     "content": "제 4회 LG Aimers에 참가하게 되었습니다. AI교육을 받으며 배운 내용을 토대로 AI관련 개념을 정리한 글, 프로그램 참가 경험을 포스팅하고자 합니다. ",
     "url": "/docs/lgaimers/lgaimers-menu/",
     
     "relUrl": "/docs/lgaimers/lgaimers-menu/"
-  },"5": {
+  },"8": {
     "doc": "Mathematics for ML",
     "title": "Mathematics for ML",
     "content": "ML에서 중요한 여러 수학적인 개념을 다룹니다. ",
     "url": "/docs/lgaimers/module2/lgaimers-mod2/",
     
     "relUrl": "/docs/lgaimers/module2/lgaimers-mod2/"
-  },"6": {
+  },"9": {
     "doc": "Matrix Decomposition",
     "title": "Matrix Decomposition",
     "content": "LinearRegression model에서도 SVD를 이용해서 parameter를 구하는 등 ML 모델의 여러 방면에서 사용됨. ",
     "url": "/docs/lgaimers/module2/matrix-decomposition/",
     
     "relUrl": "/docs/lgaimers/module2/matrix-decomposition/"
-  },"7": {
+  },"10": {
     "doc": "Matrix Decomposition",
     "title": "Determinants and Trace",
     "content": "Determinants Formal Definition . 특정 행, 열을 기준으로 Laplace Expansion을 이용하여 정의할 수 있다. $A \\in R^{n \\times n}$일 때, 특정 column j에 대해서 $det(\\mathbf{A}) = \\sum^{n}_{k=1}(-1)^{k+j}a_{kj}det(\\mathbf{A}_{kj})$ . 특정 row i에 대해서 $det(\\mathbf{A}) = \\sum^{n}_{k=1}(-1)^{k+i}a_{ik}det(\\mathbf{A}_{ik})$ . Related theorems . $det(\\mathbf{A}) \\ne 0 \\iff$ $\\mathbf{A}$ is invertible . | pf) $det(\\mathbf{A})$와 $det(rref(\\mathbf{A}))$는 같이 0이거나 같이 0이 아니다. 그런데 $\\mathbf{A}$가 invertible하다면 rref(A)는 identity matrix이니 determinant는 0이 아니다. | . Related properties . multiple of row/column을 다른 row/column에 더하면 $det(\\mathbf{A})$는 그대로 유지됨 . | pf) i번째 행에 j번째 행 x $\\lambda$인 경우 $det(\\mathbf{A}) = \\sum^n_{k=1}(a_{ik} + \\lambda a_{jk})C_{ik} = \\sum^n_{k=1}a_{ik}C_{ik} + \\lambda a_{jk}C_{ik}$ 이므로 $det(\\mathbf{A})$와 같다. | . 특정 row/column에 scalar k를 곱한 경우 $det(\\mathbf{A})$는 $k \\times det(\\mathbf{A})$ . | pf) determinant의 laplace extension 정의로 보일 수 있다. | . 두 개의 row/column을 swap하는 경우 $det(\\mathbf{A})$의 부호가 바뀐다 . | pf) swap된 row 또는 column을 다시 바꾸기 위해 permutation의 횟수가 1회 증가하므로 부호가 바뀐다. | . matrix A, D가 similar한 경우 $det(A) = det(D)$ . | pf) A, D가 similar한 경우에는 $\\mathbf{A} = \\mathbf{P}^{-1}\\mathbf{D}\\mathbf{P}$ 이므로 determinant를 씌우게 되면 같음을 보일 수 있다. | . Trace의 정의 . 모든 diagonal entry의 합 . ",
     "url": "/docs/lgaimers/module2/matrix-decomposition/#determinants-and-trace",
     
     "relUrl": "/docs/lgaimers/module2/matrix-decomposition/#determinants-and-trace"
-  },"8": {
+  },"11": {
     "doc": "Matrix Decomposition",
     "title": "Eigenvalue and Eigenvectors",
     "content": "Properties . $A \\in R^{n \\times n}$에서 n개의 eigenvalue가 서로 다르다면 A의 eigenvector는 서로 linear independent하며 $R^{n}$ 의 basis를 구성한다. | pf) n=2인 경우부터 귀납적으로 보인다. | . trace는 모든 eigenvalue의 합 . determinant는 모든 eigenvalue의 곱 . ",
     "url": "/docs/lgaimers/module2/matrix-decomposition/#eigenvalue-and-eigenvectors",
     
     "relUrl": "/docs/lgaimers/module2/matrix-decomposition/#eigenvalue-and-eigenvectors"
-  },"9": {
+  },"12": {
     "doc": "Matrix Decomposition",
     "title": "Cholesky Decomposition",
     "content": "matrix A가 symmetric, positive definite일 때, $\\mathbf{A} = \\mathbf{L}\\mathbf{L}^T$와 같이 A를 decompose할 수 있다. | L은 lower triangular matrix | L을 Cholesky factor라고 함 | determinant를 쉽게 계산하는 것 등등에 활용할 수 있음 | . ",
     "url": "/docs/lgaimers/module2/matrix-decomposition/#cholesky-decomposition",
     
     "relUrl": "/docs/lgaimers/module2/matrix-decomposition/#cholesky-decomposition"
-  },"10": {
+  },"13": {
     "doc": "Matrix Decomposition",
     "title": "Eigendecomposition (EVD)",
     "content": "Coming soon . ",
     "url": "/docs/lgaimers/module2/matrix-decomposition/#eigendecomposition-evd",
     
     "relUrl": "/docs/lgaimers/module2/matrix-decomposition/#eigendecomposition-evd"
-  },"11": {
+  },"14": {
     "doc": "Matrix Decomposition",
     "title": "Singular Value Decomposition (SVD)",
     "content": "Coming soon . ",
     "url": "/docs/lgaimers/module2/matrix-decomposition/#singular-value-decomposition-svd",
     
     "relUrl": "/docs/lgaimers/module2/matrix-decomposition/#singular-value-decomposition-svd"
-  },"12": {
+  },"15": {
     "doc": "PCA",
     "title": "Principal Component Analysis (PCA, 주성분 분석)",
     "content": " ",
     "url": "/docs/lgaimers/module2/pca/#principal-component-analysis-pca-%EC%A3%BC%EC%84%B1%EB%B6%84-%EB%B6%84%EC%84%9D",
     
     "relUrl": "/docs/lgaimers/module2/pca/#principal-component-analysis-pca-주성분-분석"
-  },"13": {
+  },"16": {
     "doc": "PCA",
     "title": "PCA",
     "content": " ",
     "url": "/docs/lgaimers/module2/pca/",
     
     "relUrl": "/docs/lgaimers/module2/pca/"
-  },"14": {
+  },"17": {
     "doc": "MacOs Flutter 개발환경 구성",
     "title": "MacOs Flutter 개발환경 구성",
     "content": " ",
