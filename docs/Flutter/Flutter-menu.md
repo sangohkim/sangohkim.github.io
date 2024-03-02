@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Flutter Tips!
+title: Flutter
 has_children: true
 ---
 

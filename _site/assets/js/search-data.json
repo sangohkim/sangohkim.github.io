@@ -1,177 +1,86 @@
 {"0": {
+    "doc": "Flutter",
+    "title": "Flutter",
+    "content": "Flutter 개발에 대한 글을 씁니다. ",
+    "url": "/docs/Flutter/Flutter-menu/",
+    
+    "relUrl": "/docs/Flutter/Flutter-menu/"
+  },"1": {
     "doc": "About",
     "title": "About",
     "content": "AI, Flutter 및 이것저것 관심있는 개발자입니다 :) . GitHub . ",
     "url": "/about/",
     
     "relUrl": "/about/"
-  },"1": {
-    "doc": "Convex Optimization",
-    "title": "Convex Optimization",
-    "content": " ",
-    "url": "/docs/lgaimers/module2/cvx-opt/",
-    
-    "relUrl": "/docs/lgaimers/module2/cvx-opt/"
   },"2": {
-    "doc": "Convex Optimization",
-    "title": "Optimization이 ML에서 중요한 이유",
-    "content": "ML모델을 training하는 과정이 보통 최적의 parameter를 찾아내는 문제이다. 즉 Optimization 문제가 되는 경우가 많음. ",
-    "url": "/docs/lgaimers/module2/cvx-opt/#optimization%EC%9D%B4-ml%EC%97%90%EC%84%9C-%EC%A4%91%EC%9A%94%ED%95%9C-%EC%9D%B4%EC%9C%A0",
+    "doc": "AI",
+    "title": "AI",
+    "content": "AI 공부하면서 이것저것 써봅니다 :) . ",
+    "url": "/docs/AI/ai-menu/",
     
-    "relUrl": "/docs/lgaimers/module2/cvx-opt/#optimization이-ml에서-중요한-이유"
+    "relUrl": "/docs/AI/ai-menu/"
   },"3": {
-    "doc": "Convex Optimization",
-    "title": "Optimization problem의 분류",
-    "content": ". | constraints가 있는지에 따라 . | Constrained optimization | Unconstrained optimzation | . | objective function, constraints가 convex인지에 따라 . | Convex optimization 인지 여부로 분류 가능 | . | . ",
-    "url": "/docs/lgaimers/module2/cvx-opt/#optimization-problem%EC%9D%98-%EB%B6%84%EB%A5%98",
+    "doc": "DB 금융경제 공모전 참가 후기",
+    "title": "DB 금융경제공모전 참가 후기",
+    "content": "2024.03.02 . ",
+    "url": "/docs/AI/db-review/#db-%EA%B8%88%EC%9C%B5%EA%B2%BD%EC%A0%9C%EA%B3%B5%EB%AA%A8%EC%A0%84-%EC%B0%B8%EA%B0%80-%ED%9B%84%EA%B8%B0",
     
-    "relUrl": "/docs/lgaimers/module2/cvx-opt/#optimization-problem의-분류"
+    "relUrl": "/docs/AI/db-review/#db-금융경제공모전-참가-후기"
   },"4": {
-    "doc": "Convex Optimization",
-    "title": "Unconstrained optimization",
-    "content": "Unconstrained optimization problem인 경우 gradient descent를 바로 활용할 수 있다. Gradient Descent의 개념 . objective function이 $f(\\mathbf{x})$이고 epoch당 step size (learning rate)가 $\\gamma_k$일 때, . | step size의 값이 적절하고 | 방향 $\\mathbf{d}_k$가 $\\nabla f(\\mathbf{x}_k) \\cdot \\mathbf{d}_k &lt; 0$ | . 인 경우 local optimum을 구할 수 있음이 보장됨. | gradient vector는 각 point에서 가장 빠르게 증가하는 방향으로 흐르기 때문에 gradient vector의 반대 방향으로 $\\mathbf{d}_k$를 설정 | step마다 learning rate가 달라질 수 있음(learning rate schedule을 사용하는 경우) . | sklearn의 SGDClassifier에서 learning_rate를 점진적으로 감소시키는 등의 방법 | . | . Gradient Descent의 종류 . 일반적으로 최적화시켜야 하는 loss function은 각각의 data point에 대한 loss function을 더한 것으로 정의되는 경우가 많다(예를 들면 Linear regression에서 loss function은 MSE를 이용해 정의됨). 따라서 gradient를 구할 때도 각각의 data point에 대한 gradient를 모두 더하여 전체 gradient를 구해야하는 경우가 많다. 1. Batch(Full) Gradient Descent . 위에서 설명한 기본적인 방식을 그대로 구현하는 GD 알고리즘. $\\mathbf{\\theta}_{k+1} = \\mathbf{\\theta}_k - \\gamma_k \\sum^n_{i=1} \\nabla f(\\mathbf{x}^{(i)})$ . | sklearn에서 제공하지 않음 | 장점 . | 안정적으로 $\\theta^*$를 찾아갈 수 있다 | . | 단점 . | 안정적인 만큼 local minimum에 빠질 수 있다 | step 마다 모든 data point에 대한 gradient를 구해야 하므로 오래 걸린다 | . | . 2. Stochastic Gradient Descent . step 마다 전체 data point 중 하나를 랜덤으로 선택한 뒤 그 data point의 gradient만 사용하여 파라미터를 최적화시키는 방식. data point의 개수를 m이라고 할 때, 한 epoch마다 랜덤으로 data point를 선택하여 파라미터를 업데이트 하는 과정을 m번 반복함. $\\mathbf{\\theta}_{k+1} = \\mathbf{\\theta}_k - \\gamma_k \\nabla f(\\mathbf{x}^{(i)})$ . | 장점 . | 한 step당 계산 시간이 줄어드므로 더 빠르게 global optimum에 도달할 수 있음 | 한번에 하나의 data point만 필요하므로 아주 큰 dataset에도 적용이 가능 | . | 단점 . | 무작위성으로 인해 global optimum을 벗어날 확률마저 높아짐 | . | learning rate schedule . | 위에서 언급한 SGD의 단점을 극복하기 위한 방법 | learning rate를 점진적으로 감소시켜 global optimum에 안정적으로 도달할 수 있게 해주는 방식 | . | SGD를 적용하기 위한 조건 . | dataset이 IID condition을 만족해야 함 . | IID condition을 갖추어야만 global optimum을 향해 간다는 것이 보장됨 | 모든 data point가 서로 독립적이며(영향을 주지 않고) 같은 분포를 가져야 함 | epoch 시작 또는 끝에 data point는 shuffle하거나 step 마다 data point를 랜덤으로 선택하는 방식을 사용하면 보장됨 | . | feature의 scale이 동일해야 함 . | scale이 동일하지 않다면 global optimum에 도달하는 시간이 더 길어짐 | sklearn의 StandardScaler() 이용하기 | . | . | sklearn에서 SGD 사용하기 . | SGDClassifier: default learning rate schedule 방식은 $\\gamma_k = \\frac{1}{alpha(t_0 + k)}$ | SGDRegressor: default learning rate schedule 방식은 $\\gamma_k = \\frac{eta0}{k^{power_t}}$ | . | . ''' 적절한 dataset X, y가 주어진 경우 ''' import numpy as np from sklearn.linear_model import SGDRegressor sgd_reg = SGDRegressor() sgd_reg.fit(X, y.ravel()) . 3. Mini-batch Gradient Descent . dataset을 mini-batch라고 부르는 작은 sample set으로 나누고 각각의 set에 대해서 FGD를 적용하는 방식. GPU 최적화를 잘 이용할 수 있다 . | sklearn에서는 제공하지 않음 | . ",
-    "url": "/docs/lgaimers/module2/cvx-opt/#unconstrained-optimization",
+    "doc": "DB 금융경제 공모전 참가 후기",
+    "title": "DB 금융경제 공모전 참가 후기",
+    "content": " ",
+    "url": "/docs/AI/db-review/",
     
-    "relUrl": "/docs/lgaimers/module2/cvx-opt/#unconstrained-optimization"
+    "relUrl": "/docs/AI/db-review/"
   },"5": {
-    "doc": "Convex Optimization",
-    "title": "Constrained Optimization",
-    "content": "Constrained Optimization인 경우 GD 등의 방법을 사용할 수 있게 unconstrained optimization problem으로 바꾼 후에 풀어야 함 . Standard Constrained Optimization Problem . optimization problem의 standard form: $minimize f(\\mathbf{x})$ subject to $g_i(\\mathbf{x}) \\le 0$ for $i=1,…,m$ (Inequality constraints) $h_j(\\mathbf{x}) = 0$ for $j=1,…,p$ (Equality constraints) . Problem solving via Lagrange Multipliers . Duality Mentality . Primal problem optimal value를 구할 수 있거나 또는 primal optimal value에 대한 bound를 제공할 수 있는 dual problem을 풀어서 primal problem의 optimal value를 구하자 . Dual Problem 만들기 . Lagrangian: $L(\\mathbf{x}, \\mathbf{\\lambda}, \\mathbf{\\nu}) = f(\\mathbf{x}) + \\sum^m_{i=1}\\lambda_i g_i(\\mathbf{x}) + \\sum^p_{j=1}\\nu_j h_j(\\mathbf{x})$ ($\\mathbf{\\lambda}_i \\ge 0$) . Lagrangian Dual Function: $D(\\mathbf{\\lambda}, \\mathbf{\\nu}) = inf_{\\mathbf{x}}L(\\mathbf{x}, \\mathbf{\\lambda}, \\mathbf{\\nu})$ . | $\\mathbf{\\lambda}, \\mathbf{\\nu}$가 고정되었을 때 Lagrangian의 최솟값(infimum) | primal optimal value $p^*$의 lower bound가 된다 . | primal optimal value는 결국 $f(\\mathbf{x})$의 값인데 Lagrangian이 항상 $f(\\mathbf{x})$보다 작음 | $D(\\mathbf{\\lambda}, \\mathbf{\\nu}) \\le p^*$가 항상 성립 | . | . Lagrangian Dual Problem: $max_{\\mathbf{\\lambda}, \\mathbf{\\nu}} D(\\mathbf{\\lambda}, \\mathbf{\\nu})$ subject to $\\mathbf{\\lambda} \\succeq 0$ . | $D(\\mathbf{\\lambda}, \\mathbf{\\nu}) \\le p^*$가 항상 성립하므로 Lagrangian dual function의 최댓값을 구하면 그 값이 primal optimal value에 대한 best lower bound가 됨 | Lagrangian Dual Problem은 항상 convex optimization . | GD 등의 방법을 이용해 풀 수 있음이 보장됨 | . | . 즉, constrained optimization problem의 경우 Dual Problem으로 바꿔서 푼다 . Duality . primal problem과 dual problem 사이의 관계를 의미 . primal problem optimal value: $p^*$, dual problem optimal value: $d^*$라고 하면 . Weak Duality . $d^* \\le p^*$ . | primal, dual problem 사이에서 항상 성립하는 성질 | $p^* - d^*$를 optimal duality gap이라고 함 | . Strong Duality . $d^* = p^*$ . | optimal duality gap이 0 | 대부분의 convex optimization problem에서 성립함(추가적인 몇가지 조건이 필요) | . Convex Optimization . Standard Convex optimization problem . $minimize f(\\mathbf{x})$ subject to $g_i(\\mathbf{x}) \\le 0$ for i = 1, …, m subject to $\\mathbf{a}_j^T\\mathbf{x}=\\mathbf{b}_j$ for j = 1, …, p (f, g, h 모두 convex이며 정의역도 convex set이어야 함) . | upper bound inequality on “convex” function $\\Rightarrow$ Constraint set이 convex | equality constraint는 affine하므로 convex | . Convex Set 이란? . | 수학적 정의 . | Set $C$가 $\\forall \\mathbf{x}, \\mathbf{y} \\in C, \\theta \\in [0, 1]$ 일 때 $\\theta \\mathbf{x} + (1-\\theta) \\mathbf{y} \\in C$가 성립하면 convex set이라고 함 | 즉, set 내부의 임의의 두 점을 잇는 선분이 set 밖으로 나가지 않으면 convex set | . | 직관적으로 볼록한 모양의 set이라고 생각하면 됨 | . Convex function이란? . 함수 $f: \\mathbb{R}^n \\rightarrow \\mathbb{R}$의 domain이 convex set이고 domain 에 속하는 임의의 두 $\\mathbf{x}, \\mathbf{y}$가 $\\theta \\in [0, 1]$일 때 $f(\\theta \\mathbf{x} + (1-\\theta)\\mathbf{y}) \\le \\theta f(\\mathbf{x}) + (1-\\theta) f(\\mathbf{y})$를 만족하면 f를 convex funtion이라고 한다. | $0 \\lt \\theta \\lt 1$인 경우 strictly convex라고 함. | concave: -f가 convex인 경우 | affine function: convex이면서 concave인 function . | linear function이 대표적인 예시 | . | . Convex function의 특징 . | local minimum이 곧 global minimum이다. | curvature(곡률)이 항상 증가한다(접선의 기울기가 항상 증가한다) | . Convex function의 예시 . $f(\\mathbf{x}) = max{x_1, x_2, …, x_n}$ $f(\\mathbf{x}) = log\\sum^n_{i=1}e^{x_i}$ . Convex-preserving operation . | $f = \\sum^n_{i=1}w_if_i$ | $g(\\mathbf{x}) = f(a\\mathbf{x} + b)$ | $f=max{f_1, f_2}$ | 기타 등등 | . Lagrangian Dual Function이 Convex function인 이유 . | Point-wise supremum . | $f(\\mathbf{x}, \\mathbf{y})$가 y를 고정했을 때 $\\mathbf{x}$에 대해서 convex이면 $g(\\mathbf{x}) = inf_{\\mathbf{y} \\in \\alpha} f(\\mathbf{x}, \\mathbf{y})$도 convex | $f(\\mathbf{x}, \\mathbf{y})$가 y를 고정했을 때 $\\mathbf{x}$에 대해서 concave이면 $g(\\mathbf{x}) = inf_{\\mathbf{y} \\in \\alpha} f(\\mathbf{x}, \\mathbf{y})$도 concave | . | Lagrangian dual function . | Lagrangian은 $\\mathbf{x}$를 고정했을 때, linear함으로 concave하다(사실 affine이므로 convex, concave 모두 가능함) | 따라서 Lagrangian dual function은 concave하다 | Lagrangian dual problem은 concave function을 maximizing하는 것이므로 사실 convex function을 minimizing하는 것과 같다. | 결국 Dual problem은 convex optimization problem이다 $\\Rightarrow$ 풀 수 있음이 보장된다. | . | . KKT Condition (Karush-Kuhn-Tucker Optimality condition) . $g_i(\\mathbf{x}) \\le 0, h_j(\\mathbf{x}) = 0, \\lambda^*_i \\ge 0, \\lambda^*_ig_i(\\mathbf{x})=0, \\nabla L(\\mathbf{x}^*, \\mathbf{\\lambda}^*, \\mathbf{\\nu}^*) = 0$ 일 때 KKT condition을 만족한다고 함. KKT Condition과 관련된 성질 . | strong duality가 만족되는 optimization problem의 primal, dual solution은 KKT condition을 만족 | 임의의 optimization problem의 primal, dual solution이 KKT condition을 만족하면 strong duality가 성립한다. | . ",
-    "url": "/docs/lgaimers/module2/cvx-opt/#constrained-optimization",
+    "doc": "CI/CD for Flutter projects",
+    "title": "Flutter 프로젝트에 CI/CD 적용하기",
+    "content": "2024.03.02 . 쓰는중…. ",
+    "url": "/docs/Flutter/flutter-cicd/#flutter-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%97%90-cicd-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0",
     
-    "relUrl": "/docs/lgaimers/module2/cvx-opt/#constrained-optimization"
+    "relUrl": "/docs/Flutter/flutter-cicd/#flutter-프로젝트에-cicd-적용하기"
   },"6": {
-    "doc": "Flutter Tips!",
-    "title": "Flutter Tips!",
-    "content": "Flutter 개발에 대한 글을 씁니다. ",
-    "url": "/docs/fluttertips/fluttertips-menu/",
+    "doc": "CI/CD for Flutter projects",
+    "title": "CI/CD for Flutter projects",
+    "content": " ",
+    "url": "/docs/Flutter/flutter-cicd/",
     
-    "relUrl": "/docs/fluttertips/fluttertips-menu/"
+    "relUrl": "/docs/Flutter/flutter-cicd/"
   },"7": {
-    "doc": "Gradient Descent",
-    "title": "Gradient Descent",
-    "content": "Gradient Descent는 ML, DL에서 parameter optimization을 위해 널리 쓰이는 기법이다. 단순한 방식의 Gradient Descent부터 기본적인 Gradient Descent의 약점을 보완해 만들어진 여러가지 방법이 있는데 이에 대해 요약해보았다. 각각의 방법에 대한 개념적인 부분 및 scikit-learn, PyTorch에서 어떻게 사용할 수 있는지에 대해서도 정리하였다. 나중에 읽어볼 관련논문: An overview of gradient descent optimization algorithms . ",
-    "url": "/docs/lgaimers/module4/gradient-descent/",
+    "doc": "Issues with Google Tester",
+    "title": "구글 테스트 메커니즘 정리",
+    "content": "2024.03.02 쓰는 중… . ",
+    "url": "/docs/Flutter/flutter-google-apple/#%EA%B5%AC%EA%B8%80-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EB%A9%94%EC%BB%A4%EB%8B%88%EC%A6%98-%EC%A0%95%EB%A6%AC",
     
-    "relUrl": "/docs/lgaimers/module4/gradient-descent/"
+    "relUrl": "/docs/Flutter/flutter-google-apple/#구글-테스트-메커니즘-정리"
   },"8": {
-    "doc": "Gradient Descent",
-    "title": "BGD, SGD, MSGD",
-    "content": "기본적인 Gradient Descent 방법이라 이 글에서는 추가적인 정리는 하지 않음. sklearn에서 SGD를 SGDClassifier, SGDRegressor 등으로 이용할 수 있다(나머지 방식은 패키지로 지원하지는 않아 필요하다면 직접 구현해야 함) pytorch에서는 BGD, SGD, MSGD 모두 구현이 가능하다(sklearn 느낌의 완성품 패키지는 없으며 torch.optim.SGD를 적절하게 사용하면 BGD, SGD, MSGD 모두 구현이 가능하다. ",
-    "url": "/docs/lgaimers/module4/gradient-descent/#bgd-sgd-msgd",
+    "doc": "Issues with Google Tester",
+    "title": "Issues with Google Tester",
+    "content": " ",
+    "url": "/docs/Flutter/flutter-google-apple/",
     
-    "relUrl": "/docs/lgaimers/module4/gradient-descent/#bgd-sgd-msgd"
+    "relUrl": "/docs/Flutter/flutter-google-apple/"
   },"9": {
-    "doc": "Gradient Descent",
-    "title": "Momentum을 추가한 방식",
-    "content": "Momentum이란? . Momentum의 의미를 조사해보면 물리학적으로 “물체가 한 방향으로 지속적으로 변동하려는 경향”이라는 의미가 있으며 주식에서는 주가의 상승 및 하락의 기세를 의미하는 용어로 사용된다. 정리해보면, Momentum은 축적된 기세, 방향을 의미하는 것이다. 위 문단에서 알아보았듯이, Gradient Descent에서도 Momentum은 유사한 의미로 활용된다. 바로 “이때까지 이동해온 gradient의 축적된 정보”로 말이다. 그렇다면 Momentum을 굳이 왜 추가하는 것일까? . Motivation . Gradient descent는 좋은 방법이지만 약점도 존재한다. 바로 local optimum에 빠져서 global optimum을 찾아갈 수 없을 가능성이다. Momentum은 gradient descent과정에서 local optimum을 더 잘 빠져나가기 위해서 사용하는 것이다. 원리는 다음과 같다. Gradient descent를 통해 local optimum에 도달했다고 가정하자. momentum을 사용하지 않은 GD의 경우에 gradient가 0이 되버리며 학습이 종료된다. 그러나 momentum 정보를 추가한 상태라면 이전에 쌓여왔던 정보를 이용해 local optimum을 벗어날 수도 있는 것이다. SGD + Momentum . $\\mathbf{v}_t = \\rho \\mathbf{v}_{t-1} + \\alpha \\nabla J(\\mathbf{\\theta}_t)$ . $\\mathbf{\\theta}_{t} = \\mathbf{\\theta}_{t-1} - \\mathbf{v}_{t}$ . $\\rho$는 momentum term으로써 0 ~ 1의 범위를 가지며 보통 0.9 또는 유사한 값으로 설정된다고 한다. 즉 parameter update 시에 현재 시점의 gradient 뿐 아니라 이전 스텝의 gradient 정보도 반영해주는 방식이다. Nesterov Accelerated Gradient (NAG) . momentum을 사용하지 않는 경우 우리의 다음 step은 온전히 현재의 gradient에 달려 있어 어디로 이동할 지 예측하기 어렵다. 하지만 momentum 정보를 이용하면 다음 step에 대해 대략적인 예상을 할 수 있게 된다($\\mathbf{\\theta}_{t-1} - \\rho \\mathbf{v}_{t-1}$이 다음 parameter와 유사한 값이기 때문). $\\mathbf{v}_t = \\rho \\mathbf{v}_{t-1} + \\alpha \\nabla J(\\mathbf{\\theta}_{t-1} - \\rho \\mathbf{v}_{t-1})$ . $\\mathbf{\\theta}_t = \\mathbf{\\theta}_{t-1} - \\mathbf{v}_t$ . NAG를 사용하면 이전의 모멘텀을 기반으로 미래를 예측해 파라미터를 업데이트하므로 SGD보다 더 안정적이고 빠르게 수렴할 수 있다. 이러한 장점이 잘 활용되어 다양한 RNN task 등등에 널리 이용되고 있다. torch.optim.SGD로 구현하기 . sklearn에서는 위의 방법들(BGD, SGD, MSGD, Momentum, NAG) 중 SGD를 제외하고는 패키지로 제공되는 것이 없다. 따라서 torch.optim.SGD를 이용해서 Momentum, NAG를 사용하는 방법에 대해 정리해보았다. import torch model = ... # 적절한 모델이 있다고 가정 # NAG를 사용하는 optimizer 정의하기 optimizer = torch.optim.SGD( model.parameters(), lr=0.01, # learning rate momentum=0.9, # momentum factor (default는 0) dampening=0, # velocity에 현재의 gradient를 얼마나 반영시키는 지 결정 (default는 0) weight_decay=0, # L2-regularization을 사용하는 경우 regularization term의 값 nesterov=True, # NAG를 사용할 지 여부 (default는 False) ) . ",
-    "url": "/docs/lgaimers/module4/gradient-descent/#momentum%EC%9D%84-%EC%B6%94%EA%B0%80%ED%95%9C-%EB%B0%A9%EC%8B%9D",
-    
-    "relUrl": "/docs/lgaimers/module4/gradient-descent/#momentum을-추가한-방식"
-  },"10": {
-    "doc": "Gradient Descent",
-    "title": "Per-parameter learning rate를 추가한 방식",
-    "content": "feature마다 scale이 다를 수도 있고 서로 최적화되는 시점도 다를 수 있으므로 feature 별로 learning rate를 다르게 해주는 것이 효과적일 것이라는 아이디어를 적용한 방법. AdaGrad (Adaptive Gradient) . $\\mathbf{\\theta}$가 d차원이라고 한다면 $i \\in [1, d]$에 대해서 . $\\mathbf{\\theta}_{t, i} = \\mathbf{\\theta}_{t-1, i} - \\frac{\\alpha}{\\sqrt{\\mathbf{G}_{t, ii} + \\epsilon}} \\nabla J(\\mathbf{\\theta}_{t, i})$ . | $\\mathbf{G}_{t}$는 diagonal matrix이며 각각의 diagonal entry $\\mathbf{G}_{ii}$는 $\\mathbf{\\theta}_{i}$의 time 1~t까지의 gradient의 squared sum. | $\\epsilon$은 division by zero를 방지하기 위한 것으로 1e-8 정도의 값을 사용함 | squared root를 취한 버전이 더 잘 작동한다고 함 | . AdaGrad의 장점 . | parameter별 learning rate가 automatic tuning이 된다 . | gradient 제곱의 합이 커질수록 학습률이 작아지기 때문 | feature 별로 gradient를 관리할 수 있음 | . | . AdaGrad의 단점 . | gradient의 제곱을 계속 더하는 과정으로 인해 나중에는 learning rate가 너무 작아져서 학습이 일어나지 않음 | . PyTorch에서 AdaGrad 사용하기 . PyTorch AdaGrad 알고리즘은 learning rate scheduling이 적용되어있고 epsilon을 루트 외부에 더하여서 위와 계산식이 약간 다름. import torch model = ... # 적절한 모델이 있다고 가정 optimizer = torch.optim.Adagrad( model.parameters(), lr=0.01, # default가 0.01 lr_decay=0, # learning rate scheduling에 사용됨(0이면 schedule 안함) weight_decay=0, # L2-regularization 사용 시에 적용 initial_accumulator_value=0, eps=1e-10, # division by zero 방지 (default는 1e-10) ) . RMSProp . AdaGrad의 단점을 해결하기 위한 방법. gradient의 squared sum을 더하는 방식을 변경함 . $E[g^2]_t = \\rho E[g^2]_{t-1} + (1-\\rho)g_t^2$ . | $\\mathbf{G}_{t, ii}$ 대신에 $E[g^2]_t$를 사용함. | . PyTorch에서 RMSProp 사용하기 . import torch model = ... # 적절한 모델이 있다고 가정 optimizer = torch.optim.RMSProp( model.parameters(), lr=0.01, alpha=0.99, eps=1e-8, weight_decay=0, momentum=0, centered=False ) . Adam (Adaptive Moment Estimation) . AdaGrad와 RMSProp을 합친 버전 . | RMSProp와 유사하게 이전 gradient들의 squared sum을 저장함 | AdaGrad와 유사하게 이전 gradient들을 momentum 형태로 저장함 | . $m_t = \\beta_1 m_{t-1} + (1-\\beta_1)g_t$ . | mean | $\\beta_1$은 보통 0.9 $m_t = \\frac{m_t}{1-\\beta_1^t}$ | $m_t$는 0으로 초기화되기 때문에 초기 과정에서 0으로 치우치는 것을 발견함. 이러한 bias를 없애기 위해 나눠주는 것. | . $v_t = \\beta_2 v_{t-1} + (1-\\beta_2)g_t^2$ . | variance | $\\beta_2$는 보통 0.999 $v_t = \\frac{v_t}{1 - \\beta_2^t}$ | . $\\theta_{t, i} = \\theta_{t-1, i} - \\alpha \\frac{s_t}{\\sqrt{r_t + \\epsilon}}$ . | $\\epsilon$은 1e-8 추천 | . PyTorch에서 Adam 사용하기 . import torch model = ... # 적절한 모델이 있다고 가정 optimizer = torch.optim.Adam( model.parameters(), lr=0.001, betas=(0.9, 0.999), eps=1e-8, weight_decay=0, amsgrad=False # Adam에서 조금 변형된 버전이라고 함 ) . 대부분의 케이스에서 가장 좋은 선택은 Adam이라고 함 . ",
-    "url": "/docs/lgaimers/module4/gradient-descent/#per-parameter-learning-rate%EB%A5%BC-%EC%B6%94%EA%B0%80%ED%95%9C-%EB%B0%A9%EC%8B%9D",
-    
-    "relUrl": "/docs/lgaimers/module4/gradient-descent/#per-parameter-learning-rate를-추가한-방식"
-  },"11": {
     "doc": "Home",
     "title": "Home",
     "content": "안녕하세요 :) . 개발 및 공부를 하면서 헷갈렸던 것들, 꼭 기억하고 싶은 것들 (그 이외에도 구구절절한 경험)을 기록하기 위해 블로그를 만들었습니다. ",
     "url": "/",
     
     "relUrl": "/"
-  },"12": {
-    "doc": "LG Aimers",
-    "title": "LG Aimers",
-    "content": "제 4회 LG Aimers에 참가하게 되었습니다. AI교육을 받으며 배운 내용을 토대로 AI관련 개념을 정리한 글, 프로그램 참가 경험을 포스팅하고자 합니다. ",
-    "url": "/docs/lgaimers/lgaimers-menu/",
+  },"10": {
+    "doc": "LG-Aimers 참가 후기",
+    "title": "나의 첫 AI 대회, LG-Aimers 참가 후기",
+    "content": "2024.03.02. 내가 벌써 3학년…?? . 지난 가을학기가 끝나갈 무렵, 아무 생각없이 2학년을 끝마친 나는 이젠 뭔가 해야한다는 초조함에 시달리고 있었다. 개별연구? 공모전? 어떤것이든 기회가 주어지면 주저없이 해야겠다는 생각으로 여러 대회도 찾아보던 와중에 우연히 광고로 제 4회 LG-Aimers를 알게되었고 갓생 방학을 보내고자 참가하게 되었다. 2023.12 . LG-Aimers를 지원할 2023년 12월 당시 나는 AI 쪽으로는 거의 아는게 없던 상태였다. 프로그래밍은 예전부터 꾸준히 해왔지만 인공지능 분야로는 거의 해본적이 없었다. 다만 직전학기에 학부 기계학습 수업을 들어 기본적인 머신러닝, 딥러닝 모델에 관해 개념적으로는 나름대로 탄탄하게 알고 있었다. 내게 부족했던건 개념적인 부분보다는 실제로 라이브러리 등을 사용해서 모델을 구현하는 부분이니, LG-Aimers Phase 2가 시작되기 전에 미리 공부를 해두면 좋겠다는 생각이 들었다.(LG-Aimers Phase 1은 개념 위주라 직전 학기에 들었던 학부 수업이랑 많이 겹쳤다. 그래서 거의 안들었다). 머신러닝에 많이 사용되는 scikit-learn, 딥러닝에 자주 사용되는 Tensorflow, Keras 또는 PyTorch에 대해 잘 설명한 책이 있는지 찾아보다가 Hands-on ML이라는 유명한 책을 발견해 1월 중에 최대한 공부해보기로 했다. 2024.01 . LG-Aimers는 딥러닝보다는 머신러닝 위주로 운영되는것 같아 HOML에서 머신러닝 부분만 우선 공부해보기로 했다. 다행히 sklearn이 편리하게 사용할 수 있고, 설명 및 문서화가 정말 친절하게 잘 되어 있어서(이때까지 봤던 그 어떤 패키지보다 좋았다) 사용하는게 크게 어렵지 않았다. 직전학기에 학부 수업에서 개념을 열심히 공부했던 것도 큰 도움이 되었는지, 다행히 1월 중으로 Classification, Regression 에 사용되는 여러 모델 훈련 및 전체적인 ML 모델 개발 프로세스를 잘 익힐 수 있었다. LG-Aimers Phase 2는 개인으로 참가도 가능했지만 팀으로 참가도 가능했다. 우연히 학교에서 LG-Aimers 준비하시는 분들이 있는 오픈채팅을 알게 되었고 그 톡방에 있던 사람들 중 두 분과 함께 셋이서 팀을 이루게 되었다. 팀이 결성된 시기는 1월 마지막 주쯤으로 Phase 2 시작 직전이기에 스터디 같은 건 많이 못하고 데이콘에 있는 이전 LG-Aimers 대회 주제에 대해 수상자 분들의 코드를 분석해보는 스터디 정도만 했다. 이때 머신러닝, 딥러닝을 이용해 문제를 해결해 나가는 과정에 대해 확실히 알게 된 것 같다. 간단히 요약해보자 . | EDA 및 preprocessing . | EDA는 처음에는 용어를 보고 겁이 났지만, 알고보니 그냥 데이터셋 파악하는거였다! 였는데 정의는 간단했으나 실제로 하기에 쉽지는 않았다. 물론 특성 별 분포, 상관관계 등 기본적인 정보를 파악하는건 어렵지 않았지만 너무 단순한것들만 해서 그런지 후술하겠지만 인사이트가 보이지 않았다. Feature engineering은 깊게 들어가니 VIF 등등 생소한 개념, 방법들이 많이 나왔다. 요령도 조금 있어야 하는것 같은데 이런 면에서 아직 데이터분석에는 내가 많이 부족한 것 같다. | . | 모델 설계 및 최적화 . | 이 부분은 좀 자신있었다. 분류 문제를 해결한다고 치면 SVM, 여러 앙상블 모델 등등을 적용해보고 성능이 괜찮으면 튜닝으로 최적화하여 좋은 모델을 만들어 내는 과정이다. | . | . 2024.02 . 대망의 Phase 2가 시작되었다! 이전까지는 데이콘에서 진행했는데 이번에는 엘리스에서 진행되었다. 주제는 MQL 데이터 기반 B2B 영업기회 창출 예측 모델 개발이었다. 우선 주제를 듣자마자 벙쪘던 것 같다. 마케팅 분야에는 문외한이었던 나였기에, 처음에는 주제 및 데이터셋 이해하는 것도 쉽지 않았다. 막막하긴 했지만 아래 과정대로 일단 차근차근 진행해보았다. 1. MQL이 도대체 뭐야 . MQL은 Marketting Qualified Lead의 약자로 회사가 투자하면 충분히 상품에 관심을 가질 만한 고객을 의미한다. 즉 이번 모델의 목적은 여러 고객의 정보가 담긴 데이터셋을 받았을 떄 MQL로 전환할 수 있을 만한 고객을 찾는 것이다. 이제 문제가 나름 선명하게 그려지기 시작했다. 이외에도 관련 마케팅 개념을 조금 알아보았으나 글이 너무 길어질 것 같아 우선 넘어가겠다. 2. EDA . 일단 csv파일을 DataFrame으로 만들고 아래와 같은 작업을 했다. DataFrame으로만 분석한건 아니고 Dataprep이라는 자동 EDA툴을 알게되어 기본적인건 Dataprep을 이용했고 세부적인 조정이 필요한 작업만 판다스로 직접 했다. | 특성별로 unique한 값 파악하기 | 결측치, 결측비율 확인하기 | 수치형 특성이라면 분포 확인하기, 범주형 특성이라면 서로 다른 값들의 비율 확인하기 | 특성 하나하나 직접 값들을 보면서 겹치거나 불필요한거 찾아내기 | 특성 사이의 상관관계 분석하기 | . 와 같이 꽤 많은 작업을 했으나 얻은 인사이트가 거의 없다…. 그나마 알게된걸 정리해보자면 . | 특성 별로 같은 의미의 값이 서로 다르게 기록되어있다 . | OTHER, OTHERS | ETC, ETC. | . | . 가 전부였다. 그래서 일단 저것만 적용하기로 하고 모델을 적용해보았다. 3. 모델 적용하기 . 일단 LogisticRegression을 사용했으나 당연히 택도 없었고 SVM은 너무 느렸고 결과도 별로였다. Imputing 방식도 중간에 KNNImputer, IterativeImputer로 해보았는데 그닥 나아지지 않았다. 베이스라인에서 쓰인 DecisionTreeClassifier를 튜닝해보아도 베이스라인 점수를 넘지 못했다. 팀원분들이 Autogluon 으로 여러 모델을 적용해본결과 앙상블 계열 모델이 가장 성능이 좋았다(이때가 벌써 2월 초중반이었다. 캐글, 데이콘 여러번 해보신 분들은 이때까지 앙상블 안쓰고 뭐했냐 생각하실수도 있는데…..나는 앙상블 계열부터 적용해보아야 했다는걸 이때 처음 알았다ㅠㅠ) . 그래서 우선 RandomForestClassifier부터 적용했다. 튜닝도 열심히 해보았지만 베이스라인 못넘었다. ExtraTreesClassifier 등등 다 적용해보았는데 잘 안되었다. 이후 부스팅 계열을 적용해보기로 했다. sklearn에 있던 GradienBoostingClassifier, HistGradientBoostingClassifier는 그리 효과가 좋지 않았다(지금 생각해보니까 내가 제대로 못쓴거 같다). 그 이후 XGBoost, CatBoost, LightGBM을 사용해보기로 했는데 XGBoost를 사용하니까 처음으로 베이스라인을 넘었다!!!! (이때가 벌써 2월 중반) . 감격에 겨워 정신을 못차렸지만 우선 진정하고 원인 분석을 해보았다. 보니까 이때까지 사용했던 다른 모델에서 충분한 성과가 나오지 않았던게 물론 모델의 복잡성이 낮은 걸 수도 있겠으나, 내가 class weight 설정을 제대로 하지 않았었던 게 주 원인이기도 하다(주어진 데이터셋은 0, 1이 레이블이었고 비율은 1:11로 엄청 unbalance했다). 그 이후에 XGBoost 미세 튜닝을 최대한 해보았고 public score 0.68까지 도달하였다. 아쉬웠던 부분이 XGBClassifier를 당시에 처음써보아서 파라미터 각각의 역할에 대해 잘 이해하지 못한 상황이라 효율적으로 튜닝하지 못했었다… 나중에 제대로 공부해봐야겠다. 그리고 CatBoostClassifier도 적용해보았는데 이번에는 튜닝도 해보니 0.72까지 퍼블릭 스코어가 올라갔다. 사실 CatBoostClassifier도 범주형 특성에 대한 처리 방식을 잘 이해하지 못해서 그냥 무작정 하이퍼파라미터 튜닝을 한거라 아쉬움이 남는다. 이후에 전처리 방식도 변경해보고 CatBoost 튜닝도 계속해보았지만 성능향상이 거의 없었다. (여담이지만, CatBoost는 sklearn에 내장된 RandomizedSearchCV로 튜닝하는 것이 쉽지 않았다. fit 메서드에도 인자를 주어야 하는데 이게 지원이 안되는거 같다. 그래서 optuna를 사용하는 것을 추천한다) . 마지막 시도로 교차검증하듯이 모델을 튜닝해서 각각의 predict_proba 값을 평균내어 레이블을 결정하는 방식을 시도해서 0.74까지 올랐다. 그리고 Phase 2도 종료되었다. 결과는 첫 시도치고 좋지 않았나 싶다. 우선 private score (final score) 기준 91위로 리더보드에서 밀려나지는 않았다ㅋㅋㅋㅋ public score가 100위였는데 오버피팅을 잘 피한덕분인지 순위가 조금 올랐다. 앞으로 해야할 것, 배운점 . | Feature engineering 기법 배우기(feature selection, 파생변수 등등) | XGBoost, CatBoost, LightGBM 개념적으로 이해하기 | sklearn 내장 패키지가 아니거나 모델이 좀 복잡해서 내장 튜닝 패키지 적용이 어려우면 optuna를 쓰자 | 데이콘, 캐글 몇개 더 해보면서 경험 쌓기 | . ",
+    "url": "/docs/AI/lgaimers-review/#%EB%82%98%EC%9D%98-%EC%B2%AB-ai-%EB%8C%80%ED%9A%8C-lg-aimers-%EC%B0%B8%EA%B0%80-%ED%9B%84%EA%B8%B0",
     
-    "relUrl": "/docs/lgaimers/lgaimers-menu/"
-  },"13": {
-    "doc": "Mathematics for ML",
-    "title": "Mathematics for ML",
-    "content": "ML에서 중요한 여러 수학적인 개념을 다룹니다. ",
-    "url": "/docs/lgaimers/module2/lgaimers-mod2/",
-    
-    "relUrl": "/docs/lgaimers/module2/lgaimers-mod2/"
-  },"14": {
-    "doc": "Supervised-learning",
-    "title": "Supervised learning",
-    "content": "supervised learning과 관련되어 기존에 알던 내용과 LG Aimers에서 새롭게 배운 내용을 요약해두었습니다. ",
-    "url": "/docs/lgaimers/module4/lgaimers-mod4/#supervised-learning",
-    
-    "relUrl": "/docs/lgaimers/module4/lgaimers-mod4/#supervised-learning"
-  },"15": {
-    "doc": "Supervised-learning",
-    "title": "Supervised-learning",
+    "relUrl": "/docs/AI/lgaimers-review/#나의-첫-ai-대회-lg-aimers-참가-후기"
+  },"11": {
+    "doc": "LG-Aimers 참가 후기",
+    "title": "LG-Aimers 참가 후기",
     "content": " ",
-    "url": "/docs/lgaimers/module4/lgaimers-mod4/",
+    "url": "/docs/AI/lgaimers-review/",
     
-    "relUrl": "/docs/lgaimers/module4/lgaimers-mod4/"
-  },"16": {
-    "doc": "Matrix Decomposition",
-    "title": "Matrix Decomposition",
-    "content": "LinearRegression model에서도 SVD를 이용해서 parameter를 구하는 등 ML 모델의 여러 방면에서 사용됨. ",
-    "url": "/docs/lgaimers/module2/matrix-decomposition/",
-    
-    "relUrl": "/docs/lgaimers/module2/matrix-decomposition/"
-  },"17": {
-    "doc": "Matrix Decomposition",
-    "title": "Determinants and Trace",
-    "content": "Determinants Formal Definition . 특정 행, 열을 기준으로 Laplace Expansion을 이용하여 정의할 수 있다. $A \\in R^{n \\times n}$일 때, 특정 column j에 대해서 $det(\\mathbf{A}) = \\sum^{n}_{k=1}(-1)^{k+j}a_{kj}det(\\mathbf{A}_{kj})$ . 특정 row i에 대해서 $det(\\mathbf{A}) = \\sum^{n}_{k=1}(-1)^{k+i}a_{ik}det(\\mathbf{A}_{ik})$ . Related theorems . $det(\\mathbf{A}) \\ne 0 \\iff$ $\\mathbf{A}$ is invertible . | pf) $det(\\mathbf{A})$와 $det(rref(\\mathbf{A}))$는 같이 0이거나 같이 0이 아니다. 그런데 $\\mathbf{A}$가 invertible하다면 rref(A)는 identity matrix이니 determinant는 0이 아니다. | . Related properties . multiple of row/column을 다른 row/column에 더하면 $det(\\mathbf{A})$는 그대로 유지됨 . | pf) i번째 행에 j번째 행 x $\\lambda$인 경우 $det(\\mathbf{A}) = \\sum^n_{k=1}(a_{ik} + \\lambda a_{jk})C_{ik} = \\sum^n_{k=1}a_{ik}C_{ik} + \\lambda a_{jk}C_{ik}$ 이므로 $det(\\mathbf{A})$와 같다. | . 특정 row/column에 scalar k를 곱한 경우 $det(\\mathbf{A})$는 $k \\times det(\\mathbf{A})$ . | pf) determinant의 laplace extension 정의로 보일 수 있다. | . 두 개의 row/column을 swap하는 경우 $det(\\mathbf{A})$의 부호가 바뀐다 . | pf) swap된 row 또는 column을 다시 바꾸기 위해 permutation의 횟수가 1회 증가하므로 부호가 바뀐다. | . matrix A, D가 similar한 경우 $det(A) = det(D)$ . | pf) A, D가 similar한 경우에는 $\\mathbf{A} = \\mathbf{P}^{-1}\\mathbf{D}\\mathbf{P}$ 이므로 determinant를 씌우게 되면 같음을 보일 수 있다. | . Trace의 정의 . 모든 diagonal entry의 합 . ",
-    "url": "/docs/lgaimers/module2/matrix-decomposition/#determinants-and-trace",
-    
-    "relUrl": "/docs/lgaimers/module2/matrix-decomposition/#determinants-and-trace"
-  },"18": {
-    "doc": "Matrix Decomposition",
-    "title": "Eigenvalue and Eigenvectors",
-    "content": "Properties . $A \\in R^{n \\times n}$에서 n개의 eigenvalue가 서로 다르다면 A의 eigenvector는 서로 linear independent하며 $R^{n}$ 의 basis를 구성한다. | pf) n=2인 경우부터 귀납적으로 보인다. | . trace는 모든 eigenvalue의 합 . determinant는 모든 eigenvalue의 곱 . ",
-    "url": "/docs/lgaimers/module2/matrix-decomposition/#eigenvalue-and-eigenvectors",
-    
-    "relUrl": "/docs/lgaimers/module2/matrix-decomposition/#eigenvalue-and-eigenvectors"
-  },"19": {
-    "doc": "Matrix Decomposition",
-    "title": "Cholesky Decomposition",
-    "content": "matrix A가 symmetric, positive definite일 때, $\\mathbf{A} = \\mathbf{L}\\mathbf{L}^T$와 같이 A를 decompose할 수 있다. | L은 lower triangular matrix | L을 Cholesky factor라고 함 | determinant를 쉽게 계산하는 것 등등에 활용할 수 있음 | . ",
-    "url": "/docs/lgaimers/module2/matrix-decomposition/#cholesky-decomposition",
-    
-    "relUrl": "/docs/lgaimers/module2/matrix-decomposition/#cholesky-decomposition"
-  },"20": {
-    "doc": "Matrix Decomposition",
-    "title": "Eigendecomposition (EVD)",
-    "content": "Coming soon . ",
-    "url": "/docs/lgaimers/module2/matrix-decomposition/#eigendecomposition-evd",
-    
-    "relUrl": "/docs/lgaimers/module2/matrix-decomposition/#eigendecomposition-evd"
-  },"21": {
-    "doc": "Matrix Decomposition",
-    "title": "Singular Value Decomposition (SVD)",
-    "content": "Coming soon . ",
-    "url": "/docs/lgaimers/module2/matrix-decomposition/#singular-value-decomposition-svd",
-    
-    "relUrl": "/docs/lgaimers/module2/matrix-decomposition/#singular-value-decomposition-svd"
-  },"22": {
-    "doc": "PCA",
-    "title": "Principal Component Analysis (PCA, 주성분 분석)",
-    "content": " ",
-    "url": "/docs/lgaimers/module2/pca/#principal-component-analysis-pca-%EC%A3%BC%EC%84%B1%EB%B6%84-%EB%B6%84%EC%84%9D",
-    
-    "relUrl": "/docs/lgaimers/module2/pca/#principal-component-analysis-pca-주성분-분석"
-  },"23": {
-    "doc": "PCA",
-    "title": "PCA",
-    "content": " ",
-    "url": "/docs/lgaimers/module2/pca/",
-    
-    "relUrl": "/docs/lgaimers/module2/pca/"
-  },"24": {
-    "doc": "MacOs Flutter 개발환경 구성",
-    "title": "MacOs Flutter 개발환경 구성",
-    "content": " ",
-    "url": "/docs/fluttertips/setup-macos/",
-    
-    "relUrl": "/docs/fluttertips/setup-macos/"
+    "relUrl": "/docs/AI/lgaimers-review/"
   }
 }
