@@ -71,7 +71,8 @@ MQL은 Marketting Qualified Lead의 약자로 회사가 투자하면 충분히 �
 결과는 첫 시도치고 좋지 않았나 싶다. 우선 private score (final score) 기준 91위로 리더보드에서 밀려나지는 않았다ㅋㅋㅋㅋ public score가 100위였는데 오버피팅을 잘 피한덕분인지 순위가 조금 올랐다.
 
 ### 앞으로 해야할 것, 배운점
-- Feature engineering 기법 배우기(feature selection, 파생변수 등등)
 - XGBoost, CatBoost, LightGBM 개념적으로 이해하기
-- sklearn 내장 패키지가 아니거나 모델이 좀 복잡해서 내장 튜닝 패키지 적용이 어려우면  optuna를 쓰자
+- Feature engineering 기법 배우기(feature selection, 파생변수 등등)
+- unbalanced dataset 처리하는 방법
+- sklearn 내장 패키지가 아니거나 모델이 좀 복잡해서 내장 튜닝 패키지 적용이 어려우면 optuna를 쓰자
 - 데이콘, 캐글 몇개 더 해보면서 경험 쌓기
