@@ -1,47 +1,33 @@
 {
-  "name": "just-the-docs",
-  "version": "0.3.3",
-  "description": "A modern Jekyll theme for documentation",
-  "repository": "just-the-docs/just-the-docs",
+  "name": "minimal-mistakes",
+  "version": "3.4.2",
+  "description": "Minimal Mistakes Jekyll theme npm build scripts",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mmistakes/minimal-mistakes.git"
+  },
+  "keywords": [
+    "jekyll",
+    "theme",
+    "minimal"
+  ],
+  "author": "Michael Rose",
   "license": "MIT",
-  "bugs": "https://github.com/just-the-docs/just-the-docs/issues",
+  "bugs": {
+    "url": "https://github.com/mmistakes/minimal-mistakes/issues"
+  },
+  "homepage": "https://mmistakes.github.io/minimal-mistakes/",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
   "devDependencies": {
-    "npm-run-all": "^4.1.5",
-    "prettier": "^3.1.1",
-    "stylelint": "^15.11.0",
-    "stylelint-config-standard-scss": "^11.1.0"
+    "npm-run-all": "^1.7.0",
+    "onchange": "^2.2.0",
+    "uglify-js": "^2.6.1"
   },
   "scripts": {
-    "lint": "npm-run-all --parallel --continue-on-error lint:*",
-    "lint:css": "stylelint '**/*.scss'",
-    "lint:formatting": "prettier --check '**/*.{scss,js,json}'",
-    "format": "prettier --write '**/*.{scss,js,json}'",
-    "test": "npm run lint"
-  },
-  "stylelint": {
-    "ignoreFiles": [
-      "assets/css/just-the-docs-default.scss",
-      "assets/css/just-the-docs-light.scss",
-      "assets/css/just-the-docs-dark.scss",
-      "_sass/vendor/**/*.scss"
-    ],
-    "extends": [
-      "stylelint-config-standard-scss"
-    ],
-    "rules": {
-      "alpha-value-notation": null,
-      "at-rule-empty-line-before": null,
-      "color-function-notation": null,
-      "media-feature-range-notation": "prefix",
-      "no-descending-specificity": null,
-      "scss/no-global-function-names": null
-    }
-  },
-  "prettier": {
-    "endOfLine": "lf",
-    "semi": false,
-    "singleQuote": false,
-    "tabWidth": 2,
-    "trailingComma": "es5"
+    "uglify": "uglifyjs assets/js/vendor/jquery/jquery-1.12.4.min.js assets/js/plugins/jquery.fitvids.js assets/js/plugins/jquery.greedy-navigation.js assets/js/plugins/jquery.magnific-popup.js assets/js/plugins/jquery.smooth-scroll.min.js assets/js/plugins/stickyfill.min.js assets/js/_main.js -c -m -o assets/js/main.min.js",
+    "watch:js": "onchange \"assets/js/**/*.js\" -e \"assets/js/main.min.js\" -- npm run build:js",
+    "build:js": "npm run uglify"
   }
 }
