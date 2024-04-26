@@ -30,8 +30,8 @@ Skills
 * Data Analysis, Machine Learning, Deep Learning with Python
   * pandas, numpy, matplotlib
   * scikit-learn
-  * Tensorflow
-  * Keras
+  * Tensorflow, Keras
+  * PyTorch
 * Programming
   * C/C++
   * Python
