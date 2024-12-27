@@ -19,6 +19,9 @@ Education
 <!-- * B.S. in GitHub, GitHub University, 2012 -->
 * Undergraduate Student, in Daejeon South Korea, Korea Advanced Institute of Science and Technology, 2022.03~
 
+News
+======
+
 <!-- Publications
 ======
 <ul>{% for post in site.publications reversed %}
