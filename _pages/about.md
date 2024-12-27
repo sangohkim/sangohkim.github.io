@@ -8,7 +8,7 @@ redirect_from:
 ---
 
 Hello, I'm Sangoh Kim. I'm an undergraduate student majoring computer science at KAIST.
-Currently, I'm studying about **multimodal learning**, **graph neural networks**.
+Currently, I'm studying about **multimodal learning**, **efficient learning**, **graph neural networks**.
 Also, I'm conducting research about **compositional generalization** in scene graph generation.
 Ultimately, I want to integrate AI models to downstream services via efficient learning/inference!
 
