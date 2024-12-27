@@ -21,6 +21,7 @@ Education
 
 News
 ======
+- **[JUN 2024]** I joined DSAIL@KAIST as an undergraduate research intern
 
 <!-- Publications
 ======
