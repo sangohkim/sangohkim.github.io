@@ -107,7 +107,7 @@ Pre-training 데이터셋의 이미지 중에서 Fine-tuning 데이터셋의 tes
 ViT의 경우 아래와 같이 모델 종류를 정의했습니다. ViT-B/16 으로 표기된 경우 ViT Base 크기의 모델이며 patch size가 16 x 16 임을 의미합니다.
 
 <p align="center">
- <img src="/images/paper-review-ViT-Models.png" height="500px" width="800px">
+ <img src="/images/paper-review-ViT-models.png" height="500px" width="800px">
 </p>
 
 CNN 기반의 모델의 경우 ResNet을 개량한 "ResNet (BiT)"를 사용했습니다. 변형된 부분은 아래와 같습니다.
@@ -189,7 +189,7 @@ BiT, ViT에 대해서 pretraining cost에 대한 transfer accuracy를 측정했�
 Average-5는 transfer accuracy를 측정한 5개 데이터셋에서의 평균, ImageNet은 ImageNet에서의 transfer accuracy를 나타낸 것입니다.
 
 <p align="center">
- <img src="/images/paper-review-ViT-Scaling.png" height="500px" width="800px">
+ <img src="/images/paper-review-ViT-scaling.png" height="500px" width="800px">
 </p>
 
 위 결과에서 아래의 결론을 얻을 수 있습니다.
