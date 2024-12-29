@@ -1,4 +1,273 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-12-27T21:31:16-08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Sangoh Kim</title><subtitle>Undergraduate student of Korea Advanced Institute of Science and Technology (KAIST)</subtitle><author><name>Sangoh Kim</name><email>tkddh1109 (at) kaist.ac.kr</email></author><entry><title type="html">[Paper Review] Visually-Prompted Language Model for Fine-Grained Scene Graph Generation in an Open World (CaCao)</title><link href="http://localhost:4000/posts/2024/12/CaCao-paper-review/" rel="alternate" type="text/html" title="[Paper Review] Visually-Prompted Language Model for Fine-Grained Scene Graph Generation in an Open World (CaCao)" /><published>2024-12-26T00:00:00-08:00</published><updated>2024-12-26T00:00:00-08:00</updated><id>http://localhost:4000/posts/2024/12/CaCao-paper-review</id><content type="html" xml:base="http://localhost:4000/posts/2024/12/CaCao-paper-review/"><![CDATA[<p>BERT 기반 data augmentation을 이용하여 scene graph generation 분야의 predicate imbalance 문제를 개선한 연구입니다.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-12-29T05:24:28-08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Sangoh Kim</title><subtitle>Undergraduate student of Korea Advanced Institute of Science and Technology (KAIST)</subtitle><author><name>Sangoh Kim</name><email>tkddh1109 (at) kaist.ac.kr</email></author><entry><title type="html">[Paper Review] An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale (ViT)</title><link href="http://localhost:4000/posts/2024/12/ViT-paper-review/" rel="alternate" type="text/html" title="[Paper Review] An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale (ViT)" /><published>2024-12-29T00:00:00-08:00</published><updated>2024-12-29T00:00:00-08:00</updated><id>http://localhost:4000/posts/2024/12/ViT-paper-review</id><content type="html" xml:base="http://localhost:4000/posts/2024/12/ViT-paper-review/"><![CDATA[<p>ViT의 구조를 간단히 다루어보고, 논문의 Experiments/Appendix 위주로 리뷰해보았습니다.</p>
+
+<h1 id="motivation">Motivation</h1>
+
+<p>NLP 도메인에서 Self-Attention 기반 모델 (e.g. Transformer)가 널리 활용되고 있었습니다.
+특히 large-scale dataset에서 pre-training을 진행한 후에 downstream task로 transfer 하는 방식이 주로 사용됩니다.
+그러나 CV 도메인에서는 CNN 기반 모델이 아직 주류를 이루고 있었습니다. 
+Attention과 CNN을 결합하거나, 또는 완전히 Attention으로 대체한 연구가 있긴 했으나 후자의 경우 흔히 생각하는 attention 과는 다르고
+아직 ResNet 기반 구조가 SOTA 인 상태입니다.</p>
+
+<p>저자는 Transformer를 이미지에 적용하면 CV 도메인에서도 Transformer의 강력한 장점(receptive field, generalization, etc.)을 활용할 수 있을 것이라고 생각하여 ViT를 제안하게 되었습니다.</p>
+
+<h1 id="key-idea">Key Idea</h1>
+
+<p>아래는 ViT의 전체적인 구조입니다. 저자는 Transformer가 NLP 도메인에서 보여줬던 장점을 최대한 유지하기 위해,
+Transformer의 기존 구조를 최대한 변경하지 않도록 하였습니다.</p>
+
+<p align="center">
+ <img src="/images/paper-review-ViT-ModelArchitecture.png" height="500px" width="800px" />
+</p>
+
+<h2 id="model-architecture">Model Architecture</h2>
+
+<p>이미지를 sequence 형태로 표현하기 위해서 저자는 이미지를 non-overlapping patch로 나누는 방식을 선택하였습니다.
+즉 $\mathbb{R}^{H \times W \times C}$ 의 이미지가 있을 때 이를 $\mathbb{R}^{N \times (P^2C)}$ 로 바꾸는 것입니다.</p>
+
+<p>ViT 내부의 Transformer는 latent vector dimension을 D로 유지하므로 $\mathbb{R}^{P^2C}$ 를 $\mathbb{R}^D$ 로
+매핑해야합니다. 이를 위해 flattened image patch는 Linear Projection of Flattened Patches layer를 거치게 됩니다.</p>
+
+<p>이후에 image patch 별로 1D positional encoding vector가 결합됩니다. 논문에서는 2D positional encoding 등 보다 고차원적인 방법들과 
+1D의 성능 차이가 그리 크지 않아 1D PE를 사용했다고 합니다. 이 과정에서 sequence의 첫 시작 부분에 새로운 learnable embedding이 추가됩니다.
+이 embedding은 이후 Transformer에서 image patch와 함께 인코딩 되어 이미지의 전체적인 정보를 저장하게 되고, 최종 단계에서 classification에 활용됩니다.</p>
+
+<p>PE를 거친 sequence는 Transformer를 거쳐 인코딩되고 이후 0번째 embedding이 MLP head에 주어져 image classification을 수행합니다.
+MLP head는 GELU nonlinearity를 이용한 2개의 linear layer로 구성되어 있다고 합니다.</p>
+
+<h3 id="hybrid-architecture">Hybrid Architecture</h3>
+
+<p>처음에 input sequence를 생성할 때 raw image를 patch로 나누는 것이 아닌, CNN을 거친 feature map을 사용하는 방식으로 진행하는 
+hybrid architecture도 사용이 가능하다고 합니다.</p>
+
+<h3 id="inductive-bias">Inductive bias</h3>
+
+<p>Inductive bias는 <em>모델이 unseen sample에 대한 prediction을 할 때 기반하는 모든 가정</em> 을 의미합니다.</p>
+
+<p>예를 들면 CNN 계열 모델의 inductive bias는 아래와 같을 것입니다.</p>
+<ul>
+  <li>Input data는 2D structured data 일 것이다.</li>
+  <li>Input data에 대한 convolution은 translation equivariant 할 것이다.</li>
+  <li>Input data는 locality를 가질 것이다.</li>
+</ul>
+
+<p>위 가정에 기반하여 CNN 모델은 local area에 filter를 적용하여 이미지를 처리하게 됩니다.</p>
+
+<p>Transformer의 inductive bias는 아래와 같을 것입니다.</p>
+<ul>
+  <li>Input data는 sequence 형태일 것이다.</li>
+  <li>Input data 각각은 positional encoding이 진행되었을 것이다.</li>
+  <li>Input data 간의 pairwise relation learning을 통해 패턴을 발견할 수 있을 것이다.</li>
+</ul>
+
+<p>Inductive bias가 많을 수록 모델이 직접 학습, 처리해야하는 부분이 줄어드므로 더 효율적인 모델을 설계할 수 있을 것입니다.
+반면 inductive bias에 부합하는 상황에만 모델을 적용할 수 있으니 일반성은 떨어지게 됩니다.
+Inductive bias가 적으면 모델이 직접 학습해야하는 것들이 늘어나므로 더 많은 데이터를 제공해주어야 합니다.
+학습 비용 등은 더 들지만 모델의 일반성은 더 향상되는 것입니다.</p>
+
+<p>Transformer는 CNN보다 더 일반적인 inductive bias를 가지기에 많은 학습 데이터를 필요로 하지만 다양한 도메인에 적용이 가능한 것입니다.
+ViT도 Transformer에 기반하기에 많은 학습데이터를 제공해주어야 합니다.
+ImageNet-1k 정도의 mid-size dataset으로 학습한 경우 CNN 계열 모델이, ImageNet-21k 정도의 large-scale dataset의 경우에는 ViT의 성능이 더 좋았다고 합니다.</p>
+
+<h2 id="fine-tuning-and-higher-resolution">Fine-Tuning and Higher Resolution</h2>
+
+<p>ViT를 finetuning 할 때는 일반적으로 이미지의 해상도를 높혀서 진행합니다. 이미지의 해상도가 커지면 동일한 patch size에서 자연스레 sequence의 길이도 
+길어지게 됩니다. 이때 pre-training에 맞춰진 positional embedding vector의 개수가 부족해질 수 있습니다. 논문에서는 이를 2D interpolation으로 해결했다고 합니다.</p>
+
+<h1 id="experiments">Experiments</h1>
+
+<ul>
+  <li>ViT, ResNet, Hybrid를 서로 비교하는 방식입니다.</li>
+  <li>각 모델에 적절한 data requirement, 모델별 pre-training cost 등을 측정하였다고 합니다.</li>
+</ul>
+
+<h2 id="setup">Setup</h2>
+
+<h3 id="datasets">Datasets</h3>
+
+<p>이미지 및 데이터셋에 대한 전체적인 전처리는 <a href="https://arxiv.org/abs/1912.11370">BiT</a>의 방식을 적용했다고 합니다.</p>
+
+<p>Pre-training에 사용된 데이터셋은 아래와 같습니다.</p>
+<ul>
+  <li>ILSVRC-2012 ImageNet (1k classes, 1.3M images)</li>
+  <li>ImageNet-21k (21k classes, 14M images)</li>
+  <li>JFT (18k classes, 303M images)</li>
+</ul>
+
+<p>Fine-tuning에 사용된 데이터셋은 아래와 같습니다.</p>
+<ul>
+  <li>ImageNet</li>
+  <li>CIFAR-10/100</li>
+  <li>Oxford IIIT-Pets</li>
+  <li>Oxford Flowers-102</li>
+</ul>
+
+<p>Pre-training 데이터셋의 이미지 중에서 Fine-tuning 데이터셋의 test set에 있는 이미지는 data leakage를 방지하기 위해 제거했다고 합니다.</p>
+
+<h3 id="model-variants">Model Variants</h3>
+
+<p>ViT의 경우 아래와 같이 모델 종류를 정의했습니다. ViT-B/16 으로 표기된 경우 ViT Base 크기의 모델이며 patch size가 16 x 16 임을 의미합니다.</p>
+
+<p align="center">
+ <img src="/images/paper-review-ViT-Models.png" height="500px" width="800px" />
+</p>
+
+<p>CNN 기반의 모델의 경우 ResNet을 개량한 “ResNet (BiT)”를 사용했습니다. 변형된 부분은 아래와 같습니다.</p>
+<ul>
+  <li>Batch Normalization을 Group Normalization으로 변경</li>
+  <li><a href="https://arxiv.org/abs/1903.10520">Standard Convolution</a></li>
+  <li>위 변화가 transfer 되었을 때의 성능을 증가시켜준다고 합니다.</li>
+</ul>
+
+<h3 id="training--fine-tuning">Training &amp; Fine-tuning</h3>
+
+<p>ViT 및 ResNet (BiT) 모든 모델을 Adam optimizer로 학습하였습니다. 세부 설정은 아래와 같습니다.</p>
+<ul>
+  <li>$\beta_1 = 0.9, \beta_2 = 0.999$</li>
+  <li>Batch size = 4096</li>
+  <li>Weight decay = 0.1</li>
+  <li>Linear learning rate warmup &amp; decay</li>
+</ul>
+
+<p>ImageNet에서 pretrain 하고 ImageNet에서 다시 finetune 한 경우에는 이미지의 resolution이 finetuning 할 때 증가되었다고 합니다.</p>
+
+<h3 id="metrics">Metrics</h3>
+
+<p>Pretraining이 완료된 이후에, 모델의 downstream task에 대한 성능을 측정하기 위해 논문에서는 두 가지 평가지표를 사용하였습니다.</p>
+
+<p>첫 번째는 Fine-tuning accuracy 입니다. 이 방법은 pretrained 된 모델을 finetuning한 후 accuracy를 측정하는 일반적인 방법입니다.</p>
+
+<p>그러나, finetuning cost로 인해 위 방법으로 측정하기 어려운 경우 논문에서는 Few-shot accuracy를 사용했습니다.
+Few-shot accuracy는 finetuning dataset의 training image 중 일부만 이용하여 모델의 성능을 측정하는 방식입니다.
+Linear 5-shot accuracy를 구한다고 가정했을 경우, training set에서 class 별로 5개의 이미지를 샘플링하고 least square objective로
+regression 모델을 학습합니다. label은 각각의 entry가 [-1, 1] 범위인 K-dimensional 벡터를 사용합니다.</p>
+
+<h2 id="comparison-to-state-of-the-arts">Comparison to State of the Arts</h2>
+
+<p>비교군이 되는 기존 CNN 기반 모델은 아래와 같습니다.</p>
+<ul>
+  <li>Noisy Student: ImageNet에서 SOTA이며 large EfficientNet 기반 모델</li>
+  <li>BiT-L: Large ResNet 기반. ImageNet 이외 다른 벤치마크에서 SOTA</li>
+</ul>
+
+<p align="center">
+ <img src="/images/paper-review-ViT-perf.png" height="500px" width="800px" />
+</p>
+
+<p>위 결과에 따르면 ViT는 BiT-L, Noisy Student 기반 모델과 image classification 성능이 비슷하거나 더 높은 것을 확인할 수 있습니다.
+Pretraining -&gt; Finetuning이 아닌 일반적인 CNN 모델의 성능과 비교해보아도 우수한 모습을 보여줍니다.</p>
+
+<p>특히나 주목해야할 부분은 TPUv3-core-days 지표입니다. TPUv3-core-days는 해당 모델을 pretraining 하는데에
+며칠이 걸리는지 나타낸 지표입니다. 예를 들어 제가 TPUv3 8 core로 pretraining을 진행한다면, ViT-L/16을 ImageNet-21k에서 pretraining 
+하는데에는 $\frac{0.23k}{8} \approx 29$ 일이 소요되는 것입니다. TPUv3가 A100 정도 GPU와 비슷한 성능이라고 하는데, 한 달도 정말 길지만 
+그래도 ViT가 BiT-L, Noisy Student 보다는 pretraining cost가 확실히 적은 것을 알 수 있습니다.</p>
+
+<p>결론적으로는 ImageNet-21k에서 ViT-L/16을 pretraining 하는 것이 가장 pretraining cost도 적고 좋은 downstream performance를 얻을 수 있는 
+방법인 것 같습니다.</p>
+
+<h2 id="pre-training-data-requirements">Pre-Training Data Requirements</h2>
+
+<p>저자는 inductive bias의 차이를 극복하기 위해서는 dataset size가 어느정도로 커져야 하는 지를 두 가지 실험을 통해 알아보았습니다.</p>
+
+<p>첫 번째는 pretraining dataset을 ImageNet, ImageNet-21k, JFT-300M으로 점점 키우면서 ImageNet에서의 정확도를 측정한 것입니다.
+ImageNet에서 pretraining하고 ImageNet에서 finetuning하는 것이 이상해 보이실 수 있는데 이때 이미지의 resolution을 finetuning할 때에는 
+더 증가시켰다고 합니다.</p>
+
+<p align="center">
+ <img src="/images/paper-review-ViT-Exp1.png" height="500px" width="800px" />
+</p>
+
+<p>위 그림에서 회색으로 색칠되어있는 부분이 BiT 모델의 성능 범위입니다 (아마 여러 종류의 BiT로 성능을 측정해본듯 합니다).
+ImageNet과 같이 작은 dataset에서는 ViT의 성능이 BiT를 넘어서지 못하지만 데이터셋의 크기가 커질수록 점점 비슷해지고 결국 능가하는 것을 볼 수 있습니다.
+ViT의 pretraining cost가 훨씬 저렴하니 결국 ViT를 사용하는 것이 더 이득인 것을 알 수 있습니다.</p>
+
+<p>두 번째는 JFT-300M의 subset으로 pretraining한 후에 ImageNet에서 Linear 5-shot accuracy를 측정하는 것입니다.</p>
+
+<p align="center">
+ <img src="/images/paper-review-ViT-Exp2.png" height="500px" width="800px" />
+</p>
+
+<p>10M 정도로 pretraining size가 작을 때는 BiT가 더 성능이 좋은 것을 확인할 수 있습니다. ViT는 데이터셋의 크기가 너무 작아 
+일반적인 패턴을 감지하지 못하고 주어진 10M개의 데이터셋에 오버피팅된 것으로 추정됩니다. 그러나 pretraining 데이터셋 크기가 증가할 수록
+점점 ViT의 성능이 좋아지는 것을 확인할 수 있습니다.</p>
+
+<h2 id="scaling-study">Scaling Study</h2>
+
+<p>BiT, ViT에 대해서 pretraining cost에 대한 transfer accuracy를 측정했습니다. Pretraining은 JFT-300M에서 진행했다고 합니다.
+Average-5는 transfer accuracy를 측정한 5개 데이터셋에서의 평균, ImageNet은 ImageNet에서의 transfer accuracy를 나타낸 것입니다.</p>
+
+<p align="center">
+ <img src="/images/paper-review-ViT-Scaling.png" height="500px" width="800px" />
+</p>
+
+<p>위 결과에서 아래의 결론을 얻을 수 있습니다.</p>
+<ol>
+  <li>유사한 성능을 내기까지의 pretraining cost는 ViT가 더 적다.
+    <ul>
+      <li>Average-5에서 95%의 transfer accuracy를 얻기까지의 pretraining cost를 비교해보면 ViT가 상대적으로 매우 적은 cost만을 필요로 합니다.</li>
+    </ul>
+  </li>
+  <li>Pretraining cost가 증가할수록 Hybrid와 ViT의 차이는 적어진다.</li>
+  <li>ViT는 pretraining cost 증가에 따라 성능이 증가하며 saturation을 확인할 수 없어 만약 더 거대한 사이즈로 pretraining하면 더 좋은 성능을 보일 가능성이 있다.</li>
+</ol>
+
+<h1 id="appendix">Appendix</h1>
+
+<p>여러 appendix 내용 중 self supervised learning, computation cost 분석에 관한 부분을 정리해보았습니다.</p>
+
+<h2 id="self-supervision">Self-Supervision</h2>
+
+<p>BERT의 방식을 적용하여 masked patch prediction task로 학습했다고 합니다. 이미지 하나별로 전체 patch sequence 중에 
+50%를 corrupt하는데, 그 중 80%는 learnable [MASK] embedding으로 대체하고 10%는 random patch embedding으로 대체하고 나머지 10%는 그대로 유지했다고 합니다.</p>
+
+<p>이후에 sequence를 ViT를 통해 encoding하고, corrupted patch에 대해서 mean color를 예측하는 방식으로 self-supervision을 진행하게 됩니다.
+Ground-truth mean color는 corrupted patch에 해당하는 original patch를 이용해서 구하게 됩니다.</p>
+
+<p>Training의 상세 과정은 다음과 같습니다.</p>
+<ul>
+  <li>JFT 데이터셋에서 pretraining</li>
+  <li>batch size는 4096, epoch은 14 =&gt; 대략 10000만번의 backpropagation이 진행</li>
+  <li>Adam optimizer를 사용함
+    <ul>
+      <li>basic learning rate: 2 x 10e-4</li>
+      <li>10k step까지는 warmup, 이후부터 cosine learning rate decay</li>
+    </ul>
+  </li>
+  <li>Self-supervision
+    <ol>
+      <li>mean color prediction</li>
+      <li>mean color &amp; 4x4 downsized patch prediction</li>
+      <li>full patch prediction 이후 L2 distance 측정</li>
+    </ol>
+  </li>
+  <li>corruption rate를 15%로 변경해서도 진행</li>
+</ul>
+
+<p>위와 같이 pretraining한 후에 few-shot accuracy를 측정해본 결과 3번을 제외하고는 거의 비슷한 성능을 보였습니다(ImageNet에서 ViT-B/16이 대략 80%). 또한 corruption rate는 50%일 때가 더 성능이 높았다고 합니다.</p>
+
+<p>또한 저자는 self-supervision에서는 위와 같은 enormous pretraining, large-scale dataset이 필요하지 않다고 합니다. 
+Transfer performance가 pretraining step이 100k를 넘어간 이후부터는 감소하는 모습을 보였고, ImageNet에서 pretraining을 해도 위와 비슷한 성능을 
+얻을 수 있었다고 합니다.</p>
+
+<h2 id="empirical-computation-costs">Empirical Computation Costs</h2>
+
+<p>TPUv3에서 inference speed를 측정해보았다고 합니다.</p>
+
+<p align="center">
+ <img src="/images/paper-review-ViT-inf-perf.png" height="500px" width="800px" />
+</p>
+
+<p>왼쪽 그림은 다양한 input image size에 대해서 각각의 모델이 TPUv3 코어 하나에서 초당 처리할 수 있는 이미지가 몇개인지에 대해 나타낸 것입니다.
+오른쪽 그림은 다양한 input image size에 대해서 각각의 모델이 코어 하나에서 최대로 가질 수 있는 batch size에 대해서 나타낸 것입니다.</p>
+
+<p>두 측면에서 ViT가 time/memory-efficient한 것을 확인할 수 있습니다.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>처음에 ViT의 사전학습에 한 달이 걸린다는 것을 보고 정말 놀랐습니다. 그래서 앞으로는 Self-supervision과 같이 더 적은 데이터셋으로, 혹은 더 
+효율적인 학습 방법을 제시한 연구가 있는지 알아볼 것 같습니다. 또한 ResNet과 같은 mid-size dataset에서 학습된 일반적인 CNN과 ViT, BiT 등을 비교하여
+어떤 상황에는 어떤 모델을 사용해보는것이 좋을 지 정리해볼 예정입니다.</p>
+
+<p>읽어주셔서 감사합니다 :)</p>]]></content><author><name>Sangoh Kim</name><email>tkddh1109 (at) kaist.ac.kr</email></author><category term="AI" /><summary type="html"><![CDATA[ViT의 구조를 간단히 다루어보고, 논문의 Experiments/Appendix 위주로 리뷰해보았습니다.]]></summary></entry><entry><title type="html">[Paper Review] Visually-Prompted Language Model for Fine-Grained Scene Graph Generation in an Open World (CaCao)</title><link href="http://localhost:4000/posts/2024/12/CaCao-paper-review/" rel="alternate" type="text/html" title="[Paper Review] Visually-Prompted Language Model for Fine-Grained Scene Graph Generation in an Open World (CaCao)" /><published>2024-12-26T00:00:00-08:00</published><updated>2024-12-26T00:00:00-08:00</updated><id>http://localhost:4000/posts/2024/12/CaCao-paper-review</id><content type="html" xml:base="http://localhost:4000/posts/2024/12/CaCao-paper-review/"><![CDATA[<p>BERT 기반 data augmentation을 이용하여 scene graph generation 분야의 predicate imbalance 문제를 개선한 연구입니다.</p>
 
 <hr />
 
@@ -311,83 +580,4 @@ LG-Aimers 4기에 참가하면서 결측치 처리에 대한 저만의 명확한
 
 <h3 id="2-3-deep-learning-datawig-이용하기">2-3. Deep Learning (DataWig) 이용하기</h3>
 
-<p>AWSLAB에서 <a href="https://dl.acm.org/citation.cfm?id=3272005">Biessmann, Salinas et al. 2018</a>를 이용하여 구축한 imputation 패키지입니다.. 범주형 특성에도 적용이 가능하며 다른 방식에 비해 비교적 정확하다고 합니다.. 추후 캐글에서 사용하며 구체적인 방식을 알아보겠습니다.</p>]]></content><author><name>Sangoh Kim</name><email>tkddh1109 (at) kaist.ac.kr</email></author><category term="AI" /><category term="Imputation" /><summary type="html"><![CDATA[AI 대회에서 활용하기 위해 여러 imputation 기법들을 정리해보았습니다.]]></summary></entry><entry><title type="html">[AI] LG-Aimers 참가 후기</title><link href="http://localhost:4000/posts/2024/03/lg-aimers-review/" rel="alternate" type="text/html" title="[AI] LG-Aimers 참가 후기" /><published>2024-03-02T00:00:00-08:00</published><updated>2024-03-02T00:00:00-08:00</updated><id>http://localhost:4000/posts/2024/03/lg-aimers-review</id><content type="html" xml:base="http://localhost:4000/posts/2024/03/lg-aimers-review/"><![CDATA[<p>지난 가을학기가 끝나갈 무렵, 아무 생각없이 2학년을 끝마친 나는 이젠 뭔가 해야한다는 초조함에 시달리고 있었다. 개별연구? 공모전? 어떤것이든 기회가 주어지면 주저없이 해야겠다는 생각으로 여러 대회도 찾아보던 와중에 우연히 광고로 <a href="https://www.lgaimers.ai/">제 4회 LG-Aimers</a>를 알게되었고 갓생 방학을 보내고자 참가하게 되었다.</p>
-
-<h3 id="202312">2023.12</h3>
-
-<p>LG-Aimers를 지원할 2023년 12월 당시 나는 AI 쪽으로는 거의 아는게 없던 상태였다. 프로그래밍은 예전부터 꾸준히 해왔지만 인공지능 분야로는 거의 해본적이 없었다. 다만 직전학기에 학부 기계학습 수업을 들어 기본적인 머신러닝, 딥러닝 모델에 관해 개념적으로는 나름대로 탄탄하게 알고 있었다. 내게 부족했던건 개념적인 부분보다는 실제로 라이브러리 등을 사용해서 모델을 구현하는 부분이니, LG-Aimers Phase 2가 시작되기 전에 미리 공부를 해두면 좋겠다는 생각이 들었다.(LG-Aimers Phase 1은 개념 위주라 직전 학기에 들었던 학부 수업이랑 많이 겹쳤다. 그래서 거의 안들었다). 머신러닝에 많이 사용되는 scikit-learn, 딥러닝에 자주 사용되는 Tensorflow, Keras 또는 PyTorch에 대해 잘 설명한 책이 있는지 찾아보다가 Hands-on ML이라는 유명한 책을 발견해 1월 중에 최대한 공부해보기로 했다.</p>
-
-<h3 id="202401">2024.01</h3>
-<p>LG-Aimers는 딥러닝보다는 머신러닝 위주로 운영되는것 같아 HOML에서 머신러닝 부분만 우선 공부해보기로 했다. 다행히 sklearn이 편리하게 사용할 수 있고, 설명 및 문서화가 정말 친절하게 잘 되어 있어서(이때까지 봤던 그 어떤 패키지보다 좋았다) 사용하는게 크게 어렵지 않았다. 직전학기에 학부 수업에서 개념을 열심히 공부했던 것도 큰 도움이 되었는지, 다행히 1월 중으로 Classification, Regression 에 사용되는 여러 모델 훈련 및 전체적인 ML 모델 개발 프로세스를 잘 익힐 수 있었다.</p>
-
-<p>LG-Aimers Phase 2는 개인으로 참가도 가능했지만 팀으로 참가도 가능했다. 우연히 학교에서 LG-Aimers 준비하시는 분들이 있는 오픈채팅을 알게 되었고 그 톡방에 있던 사람들 중 두 분과 함께 셋이서 팀을 이루게 되었다. 팀이 결성된 시기는 1월 마지막 주쯤으로 Phase 2 시작 직전이기에 스터디 같은 건 많이 못하고 데이콘에 있는 이전 LG-Aimers 대회 주제에 대해 수상자 분들의 코드를 분석해보는 스터디 정도만 했다. 이때 머신러닝, 딥러닝을 이용해 문제를 해결해 나가는 과정에 대해 확실히 알게 된 것 같다.
-간단히 요약해보자</p>
-
-<ol>
-  <li>EDA 및 preprocessing
-    <ul>
-      <li>EDA는 처음에는 용어를 보고 겁이 났지만, 알고보니 그냥 데이터셋 파악하는거였다! 였는데 정의는 간단했으나 실제로 하기에 쉽지는 않았다. 물론 특성 별 분포, 상관관계 등 기본적인 정보를 파악하는건 어렵지 않았지만 너무 단순한것들만 해서 그런지 후술하겠지만 인사이트가 보이지 않았다. Feature engineering은 깊게 들어가니 VIF 등등 생소한 개념, 방법들이 많이 나왔다. 요령도 조금 있어야 하는것 같은데 이런 면에서 아직 데이터분석에는 내가 많이 부족한 것 같다.</li>
-    </ul>
-  </li>
-  <li>모델 설계 및 최적화
-    <ul>
-      <li>이 부분은 좀 자신있었다. 분류 문제를 해결한다고 치면 SVM, 여러 앙상블 모델 등등을 적용해보고 성능이 괜찮으면 튜닝으로 최적화하여 좋은 모델을 만들어 내는 과정이다.</li>
-    </ul>
-  </li>
-</ol>
-
-<h3 id="202402">2024.02</h3>
-<p>대망의 Phase 2가 시작되었다! 이전까지는 데이콘에서 진행했는데 이번에는 엘리스에서 진행되었다. 주제는 <strong>MQL 데이터 기반 B2B 영업기회 창출 예측 모델 개발</strong>이었다. 우선 주제를 듣자마자 벙쪘던 것 같다. 마케팅 분야에는 문외한이었던 나였기에, 처음에는 주제 및 데이터셋 이해하는 것도 쉽지 않았다. 막막하긴 했지만 아래 과정대로 일단 차근차근 진행해보았다.</p>
-
-<h4 id="1-mql이-도대체-뭐야">1. MQL이 도대체 뭐야</h4>
-<p>MQL은 Marketting Qualified Lead의 약자로 회사가 투자하면 충분히 상품에 관심을 가질 만한 고객을 의미한다. 즉 이번 모델의 목적은 여러 고객의 정보가 담긴 데이터셋을 받았을 떄 MQL로 전환할 수 있을 만한 고객을 찾는 것이다. 이제 문제가 나름 선명하게 그려지기 시작했다. 이외에도 관련 마케팅 개념을 조금 알아보았으나 글이 너무 길어질 것 같아 우선 넘어가겠다.</p>
-
-<h4 id="2-eda">2. EDA</h4>
-<p>일단 csv파일을 DataFrame으로 만들고 아래와 같은 작업을 했다. DataFrame으로만 분석한건 아니고 <a href="https://dataprep.ai/">Dataprep</a>이라는 자동 EDA툴을 알게되어 기본적인건 Dataprep을 이용했고 세부적인 조정이 필요한 작업만 판다스로 직접 했다.</p>
-<ol>
-  <li>특성별로 unique한 값 파악하기</li>
-  <li>결측치, 결측비율 확인하기</li>
-  <li>수치형 특성이라면 분포 확인하기, 범주형 특성이라면 서로 다른 값들의 비율 확인하기</li>
-  <li>특성 하나하나 직접 값들을 보면서 겹치거나 불필요한거 찾아내기</li>
-  <li>특성 사이의 상관관계 분석하기</li>
-</ol>
-
-<p>와 같이 꽤 많은 작업을 했으나 <strong>얻은 인사이트가 거의 없다….</strong> 그나마 알게된걸 정리해보자면</p>
-<ol>
-  <li>특성 별로 같은 의미의 값이 서로 다르게 기록되어있다
-    <ul>
-      <li>OTHER, OTHERS</li>
-      <li>ETC, ETC.</li>
-    </ul>
-  </li>
-</ol>
-
-<p>가 전부였다. 그래서 일단 저것만 적용하기로 하고 모델을 적용해보았다.</p>
-
-<h4 id="3-모델-적용하기">3. 모델 적용하기</h4>
-<p>일단 LogisticRegression을 사용했으나 당연히 택도 없었고 SVM은 너무 느렸고 결과도 별로였다. Imputing 방식도 중간에 KNNImputer, IterativeImputer로 해보았는데 그닥 나아지지 않았다. 베이스라인에서 쓰인 DecisionTreeClassifier를 튜닝해보아도 베이스라인 점수를 넘지 못했다.</p>
-
-<p>팀원분들이 <a href="https://auto.gluon.ai/stable/index.html">Autogluon</a> 으로 여러 모델을 적용해본결과 앙상블 계열 모델이 가장 성능이 좋았다(이때가 벌써 2월 초중반이었다. 캐글, 데이콘 여러번 해보신 분들은 이때까지 앙상블 안쓰고 뭐했냐 생각하실수도 있는데…..나는 앙상블 계열부터 적용해보아야 했다는걸 이때 처음 알았다ㅠㅠ)</p>
-
-<p>그래서 우선 RandomForestClassifier부터 적용했다. 튜닝도 열심히 해보았지만 베이스라인 못넘었다. ExtraTreesClassifier 등등 다 적용해보았는데 잘 안되었다.</p>
-
-<p>이후 부스팅 계열을 적용해보기로 했다. sklearn에 있던 GradienBoostingClassifier, HistGradientBoostingClassifier는 그리 효과가 좋지 않았다(지금 생각해보니까 내가 제대로 못쓴거 같다). 그 이후 XGBoost, CatBoost, LightGBM을 사용해보기로 했는데 XGBoost를 사용하니까 처음으로 베이스라인을 넘었다!!!! (이때가 벌써 2월 중반)</p>
-
-<p>감격에 겨워 정신을 못차렸지만 우선 진정하고 원인 분석을 해보았다. 보니까 이때까지 사용했던 다른 모델에서 충분한 성과가 나오지 않았던게 물론 모델의 복잡성이 낮은 걸 수도 있겠으나, 내가 class weight 설정을 제대로 하지 않았었던 게 주 원인이기도 하다(주어진 데이터셋은 0, 1이 레이블이었고 비율은 1:11로 엄청 unbalance했다). 그 이후에 XGBoost 미세 튜닝을 최대한 해보았고 public score 0.68까지 도달하였다. 아쉬웠던 부분이 XGBClassifier를 당시에 처음써보아서 파라미터 각각의 역할에 대해 잘 이해하지 못한 상황이라 효율적으로 튜닝하지 못했었다… 나중에 제대로 공부해봐야겠다.</p>
-
-<p>그리고 CatBoostClassifier도 적용해보았는데 이번에는 튜닝도 해보니 0.72까지 퍼블릭 스코어가 올라갔다. 사실 CatBoostClassifier도 범주형 특성에 대한 처리 방식을 잘 이해하지 못해서 그냥 무작정 하이퍼파라미터 튜닝을 한거라 아쉬움이 남는다.</p>
-
-<p>이후에 전처리 방식도 변경해보고 CatBoost 튜닝도 계속해보았지만 성능향상이 거의 없었다. (여담이지만, CatBoost는 sklearn에 내장된 RandomizedSearchCV로 튜닝하는 것이 쉽지 않았다. fit 메서드에도 인자를 주어야 하는데 이게 지원이 안되는거 같다. 그래서 optuna를 사용하는 것을 추천한다)</p>
-
-<p>마지막 시도로 교차검증하듯이 모델을 튜닝해서 각각의 predict_proba 값을 평균내어 레이블을 결정하는 방식을 시도해서 0.74까지 올랐다. 그리고 Phase 2도 종료되었다.</p>
-
-<p>결과는 첫 시도치고 좋지 않았나 싶다. 우선 private score (final score) 기준 91위로 리더보드에서 밀려나지는 않았다ㅋㅋㅋㅋ public score가 100위였는데 오버피팅을 잘 피한덕분인지 순위가 조금 올랐다.</p>
-
-<h3 id="앞으로-해야할-것-배운점">앞으로 해야할 것, 배운점</h3>
-<ul>
-  <li>XGBoost, CatBoost, LightGBM 개념적으로 이해하기</li>
-  <li>Feature engineering 기법 배우기(feature selection, 파생변수 등등)</li>
-  <li>unbalanced dataset 처리하는 방법</li>
-  <li>sklearn 내장 패키지가 아니거나 모델이 좀 복잡해서 내장 튜닝 패키지 적용이 어려우면 optuna를 쓰자</li>
-  <li>데이콘, 캐글 몇개 더 해보면서 경험 쌓기</li>
-</ul>]]></content><author><name>Sangoh Kim</name><email>tkddh1109 (at) kaist.ac.kr</email></author><category term="LG-Aimers" /><category term="AI" /><category term="ML" /><category term="DL" /><summary type="html"><![CDATA[지난 가을학기가 끝나갈 무렵, 아무 생각없이 2학년을 끝마친 나는 이젠 뭔가 해야한다는 초조함에 시달리고 있었다. 개별연구? 공모전? 어떤것이든 기회가 주어지면 주저없이 해야겠다는 생각으로 여러 대회도 찾아보던 와중에 우연히 광고로 제 4회 LG-Aimers를 알게되었고 갓생 방학을 보내고자 참가하게 되었다.]]></summary></entry></feed>
+<p>AWSLAB에서 <a href="https://dl.acm.org/citation.cfm?id=3272005">Biessmann, Salinas et al. 2018</a>를 이용하여 구축한 imputation 패키지입니다.. 범주형 특성에도 적용이 가능하며 다른 방식에 비해 비교적 정확하다고 합니다.. 추후 캐글에서 사용하며 구체적인 방식을 알아보겠습니다.</p>]]></content><author><name>Sangoh Kim</name><email>tkddh1109 (at) kaist.ac.kr</email></author><category term="AI" /><category term="Imputation" /><summary type="html"><![CDATA[AI 대회에서 활용하기 위해 여러 imputation 기법들을 정리해보았습니다.]]></summary></entry></feed>
